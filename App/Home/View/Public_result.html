@@ -1,0 +1,48 @@
+<include file="./Public/Home/html/head.html" />
+<script src="__STATIC__/layer/layer.js"></script>
+<style>
+.layui-layer-content img{max-width: 600px;max-height: 600px;position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);}
+</style>
+<script>
+    function show_img(id){
+        $.get("{:U('Photo/detail')}",{id:id},function(data){
+            if (data) {
+                layer.open({
+                  type: 1,
+                  title: false,
+                  closeBtn: 0,
+                  area: ['600px', '600px'],
+                  skin: 'layui-layer-nobg',
+                  shadeClose: true,
+                  content: '<img src="'+data['image']+'">'
+                });
+            }
+        });
+    }
+</script>
+<div class="">
+    <img src="__IMG__/aqjy-banner01.jpg" class="img-responsive">
+</div>
+<div class="middle1200 aqij-main">
+    <include file="./Public/Home/html/bread.html" />
+    <include file="./Public/Home/html/search.html" />
+    <div class="wz-list wz-list2">
+        <ul>
+            <volist name="list" id="vo">
+            <li>
+                <switch name="vo.type">
+                <case value="1"><a href="{:U('Article/detail',array('id'=>$vo['id']))}">{$vo.title}</a></case>
+                <case value="2"><a onclick="show_img({$vo['id']})">{$vo.title}</a></case>
+                <case value="3"><a href="{:U('Video/detail',array('id'=>$vo['id']))}">{$vo.title}</a></case>
+                </switch>
+                <span class="pull-right">{$vo.create_time|date='Y-m-d H:i:s',###}</span>
+            </li>
+            </volist>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="page-nav mart50 marb50">
+        {$page}
+    </div>
+</div>
+<include file="./Public/Home/html/footer.html" />

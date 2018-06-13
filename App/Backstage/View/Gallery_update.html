@@ -1,0 +1,129 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+<script src="__JS__/main.js"></script>
+<div class="am-g tpl-g">
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-body am-fr">
+                        <form method="post"  class="am-form tpl-form-line-form">
+                            <input name="id" type="hidden" value="{$data.id}">
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">相册名称</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" name="name" placeholder="请输入相册名称" value="{$data.name}">
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">户型类型</label>
+                                <div class="am-u-sm-9">
+                                    <select name="area_id" data-am-selected>
+                                        <volist name="area_data" id="vo">
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">风格类型</label>
+                                <div class="am-u-sm-9">
+                                    <select name="style_id" data-am-selected>
+                                        <volist name="style_data" id="vo">
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">图片</label>
+                                <div class="am-u-sm-9" >
+                                    <div class="am-form-group am-form-file">
+                                        <div class="uploadBtn" style="height: 45px;">上传图片</div>
+                                        <small style="padding: 15px;color: #888;">双击图片删除。</small>
+                                    </div>
+                                    <div id="img_area">
+                                        <input name="image" type="hidden" value="{$data.img}">
+                                        <img src="{$data.img}" style="max-width:150px" ondblclick="del_img(this)">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 35px;">
+                                    <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .am-form-group{display: flex;}
+</style>
+<include file="./Public/Store/html/footer.html" />
+<script>
+
+    $(function () {
+        $('form').ajaxForm(function (data) {
+            if (data['success']) {
+                layer.alert(data['info'], function (data) {
+                    parent.$("#example-r").load(parent.location.href+" #example-r");
+                    parent.layer.close(index);
+                });
+            } else {
+                layer.msg('保存失败', {
+                    icon: 5
+                });
+            }
+        });
+    });
+
+    var index = parent.layer.getFrameIndex(window.name);
+    var uploader = WebUploader.create({
+        auto: false,
+        pick: '.uploadBtn',
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*',
+        },
+        thumb:{
+            width: 950,
+            height: 1220,
+            quality: 100,
+            allowMagnify: false,
+            crop: false,
+            type: 'image/jpeg'
+        },
+    });
+    uploader.onFileQueued = function( file ) {
+        uploader.makeThumb( file, function( error, src ) {
+            if (error) return;
+            var html = '';
+            html += '<input name="image" type="hidden" value="'+src+'">';
+            html += '<img src="'+src+'" style="max-width:150px" ondblclick="del_img(this)">';
+            $('#img_area').html(html);
+            parent.layer.iframeAuto(index);
+        });
+    }
+    function del_img(obj){
+        layer.confirm('您确定要删除该图片？', function(i){
+            $(obj).prev().remove();
+            $(obj).remove();
+            layer.close(i);
+        });
+
+    }
+
+</script>
+</body>
+
+</html>

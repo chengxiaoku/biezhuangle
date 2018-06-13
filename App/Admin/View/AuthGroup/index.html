@@ -1,0 +1,70 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="AuthGroup_Bar">
+	<div class="item-title">
+		<h3>用户组</h3>
+		<ul class="tab-base">
+			<li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('AuthGroup_Data_List');"><span>列表</span></a></li>
+			<!-- <li><a href="JavaScript:void(0);" onclick="Data_Search('AuthGroup_Search_From','AuthGroup_Data_List');"><span>搜索</span></a></li> -->
+			<if condition="Is_Auth('Admin/AuthGroup/add')">
+			<li><a href="{:U('Admin/AuthGroup/add')}"><span>新增</span></a></li>
+			</if>
+		</ul>
+	</div>
+</div>
+<div style="display: none">
+<form id="AuthGroup_Form" class="update_from" style="width:600px; height:320px;"></form>
+</form>
+  <form id="AuthGroup_Search_From" class="search_from">
+	<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+			<th>用户组标题 : </th>
+			<td><input name="s_title" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>用户组状态 : </th>
+			<td><select name="s_status" class="easyui-combobox" style="height:30px;" data-options="value:'',multiple:false,required:false,editable:false"><option value="" >请选择一个选项</option><option value="0" >禁用</option><option value="1" >启用</option></select></td>
+		</tr>    </table>
+  </form>
+</div>
+
+<table id="AuthGroup_Data_List"></table>
+
+<script type="text/javascript">
+$(function() {
+	$("#AuthGroup_Data_List").datagrid({
+		url : "{:U('AuthGroup/index')}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [ 10, 20, 50 ],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc',
+		toolbar : '#AuthGroup_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40,sortable:true},
+{field : "title",title : "用户组标题",width :200,sortable:true},{field : "status",title : "用户组状态",width :100,sortable:true,formatter: function (value, row, index) {
+			var op_status=new Array()
+			op_status["0"]="禁用"
+			op_status["1"]="启用"
+
+			return op_status[value];
+			}},
+						{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+				operate_menu='';
+
+				<if condition="Is_Auth('Admin/AuthGroup/edit')">
+				operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+				</if>
+
+				<if condition="Is_Auth('Admin/AuthGroup/del')">
+				operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','AuthGroup_Data_List');\">删除</a>";
+				</if>
+
+				return operate_menu;
+			}}
+		]]
+	});
+})
+</script></block>

@@ -1,0 +1,27 @@
+<div class="col-l">
+    <div class="all-fl">
+        <h2>全部分类</h2>
+        <div class="fg-box">
+            <volist name="catnav_list" id="vo">
+                <a href="/{$vo['name']}/mid/{:I('get.mid')}"><h4>{$vo.title}</h4></a>
+                <div class="fg">
+                    <notempty name="vo.children">
+                    <ul>
+                        <volist name="vo.children" id="vv">
+                            <li class="on">
+                            <switch name="vv.type">
+                            <case value="1"><a href="{:U('Article/index',array('cat'=>$vv['name'],'mid'=>I('get.mid')))}">{$vv.title}</a></case>
+                            <case value="2"><a href="{:U('Photo/index',array('cat'=>$vv['name'],'mid'=>I('get.mid')))}">{$vv.title}</a></case>
+                            <case value="3"><a href="{:U('Video/index',array('cat'=>$vv['name'],'mid'=>I('get.mid')))}">{$vv.title}</a></case>
+                            <case value="4"><a href="{:U('Test/index',array('cat'=>$vv['name'],'mid'=>I('get.mid')))}">{$vv.title}</a></case>
+                            </switch>
+                            </li>
+                        </volist>
+                    </ul>
+                    </notempty>
+                    <div class="clearfix"></div>
+                </div>
+            </volist>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="index">
+    <div class="am-g tpl-g">
+        <include file="./Public/Store/html/header.html" />
+        <include file="./Public/Store/html/sidebar.html" />
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+
+            <div class="container-fluid am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 后台首页 <small></small></div>
+                        <!--<p class="page-header-description">Amaze UI 含近 20 个 CSS 组件、20 余 JS 组件，更有多个包含不同主题的 Web 组件。</p>-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row-content am-cf">
+                <div class="row  am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+                        <div class="widget widget-green  am-cf">
+                            <div class="widget-statistic-header">
+                               账号余额
+                            </div>
+                            <div class="widget-statistic-body">
+                                <div class="widget-statistic-value">
+                                    ￥{$money}
+                                </div>
+                                <span class="widget-statistic-icon am-icon-support"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                        <div class="widget widget-primary am-cf">
+                            <div class="widget-statistic-header">
+                                总收入
+                            </div>
+                            <div class="widget-statistic-body">
+                                <div class="widget-statistic-value">
+                                    ￥{$sum_money}
+                                </div>
+                                <span class="widget-statistic-icon am-icon-credit-card-alt"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                        <div class="widget widget-purple am-cf">
+                            <div class="widget-statistic-header">
+                                提现总数
+                            </div>
+                            <div class="widget-statistic-body">
+                                <div class="widget-statistic-value">
+                                    ￥{$amount|default="0.00"}
+                                </div>
+                                <span class="widget-statistic-icon am-icon-support"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row am-cf">
+                    <div class="am-u-sm-12 am-u-md-8">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">收入情况 （近五天）</div>
+                            </div>
+                           <div class="widget-body-md widget-body tpl-amendment-echarts am-fr" id="tpl-echarts1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+    <include file="./Public/Store/html/footer.html" />
+</body>
+<script type="text/javascript">
+    function set(){
+        location.href="{:U('Set/index')}"
+    }
+    function show_jl(){
+        location.href="{:U('WithdrawsCash/index')}"
+    }
+
+    var echartsA = echarts.init(document.getElementById('tpl-echarts1'));
+
+    //x轴上有几条数据  (有几条信息)
+    var num = 5 ,
+    option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            top: '3%',
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [{
+            type: 'category',
+            boundaryGap: false,
+            data: []   //X轴 日期
+        }],
+        yAxis: [{
+            type: 'value'
+        }],
+        textStyle: {
+            color: '#838FA1'
+        },
+        series: [{
+            name: '收入金额/元',
+            type: 'line',
+            stack: '金额',
+            areaStyle: { normal: {} },
+            data: [],   //具体的数值
+            itemStyle: {
+                normal: {
+                    color: '#1cabdb',
+                    borderColor: '#1cabdb',
+                    borderWidth: '2',
+                    borderType: 'solid',
+                    opacity: '1'
+                },
+                emphasis: {
+
+                }
+            }
+        }]
+    };
+
+
+    echartsA.showLoading(); //显示加载进行中。。。。。
+
+    $.get("{:U('index/echatMoney')}",{_num:num},function (data){
+
+        echartsA.setOption({
+            title:{
+                text:''
+            },
+            xAxis: {
+                data: data.time
+            },
+            series: [{
+                name: '支出',
+                data: data.money
+            }]
+        });
+         echartsA.hideLoading();//关闭正在加载中 .....
+    });
+    echartsA.setOption(option);
+    window.onresize = echartsA.resize;
+
+</script>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>别装了</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/module.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/swiper.jquery.min.js"></script>
+</head>
+<style>
+    .index-img1{
+        width: 100%;
+        text-align: center;
+        background-color: #ffffff;
+        margin-top: 15px;
+        padding: 30px;
+    }
+    .index-img1 img{
+        width:100%;
+    }
+    .index-img2{
+        width: 100%;
+        text-align: center;
+        background-color: #ffffff;
+        /*margin-top: 15px;*/
+        padding-bottom:25px;
+        margin-top: -15px;
+    }
+    .index-img2 img{
+        width:100%;
+    }
+    .index-img3{
+        width: 100%;
+        text-align: center;
+        background-color: #ffffff;
+        /*margin-top: 15px;*/
+        /*padding-bottom:25px;*/
+        /*margin-top: -15px;*/
+    }
+    .index-img3 img{
+        width:100%;
+    }
+    .index-img4{
+        padding: 40px;
+        background-color: #ffffff;
+        margin-bottom: -15px;
+        margin-top: 10px;
+    }
+    .index-img4 img{
+        width: 100%;
+    }
+    .index-img5{
+        width: 100%;
+        margin-top: 10px;
+    }
+    .index-img5 img{
+        width: 100%;
+    }
+    .index-img6{
+        background-color: #ffffff;
+        width: 100%;
+        padding:30px 80px;
+        margin-top: 10px;
+        margin-bottom: -10px;
+    }
+    .index-img6 img{
+        width: 100%;
+    }
+    .jzpp-sy li{
+        border: 1px solid #f6d1cb;
+        height: 100px;
+        line-height: 100px;
+    }
+    .jzpp-sy li img{
+        width: 65%;
+    }
+</style>
+<body>
+
+<div class="mainContent">
+    <div class="swiper-container slider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <a href="#"><img src="__IMG__/focus1.jpg" class="img-responsive" alt=""></a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#"><img src="__IMG__/focus2.jpg" class="img-responsive" alt=""></a>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <script>
+        var swiper = new Swiper('.slider', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            loop:true,
+            autoplay:3000,
+            speed:600
+        });
+    </script>
+
+</div>
+<div style="background-color: #eeeeee;position: relative;z-index: 2;">
+    <ul class="nav-menu">
+        <li onclick="javascript:location.href='{:U('peizhi')}' ">
+            <a href="{:U('peizhi')}">空间配置</a>
+        </li>
+        <li onclick="javascript:location.href='{:U('fuwu')}'">
+            <a href="{:U('fuwu')}">贴心服务</a>
+        </li>
+        <li onclick="javascript:location.href='{:U('gongyi')}'">
+            <a href="{:U('gongyi')}">安装</a>
+        </li>
+        <li onclick="javascript:location.href='{:U('fucai')}'">
+            <a href="{:U('fucai')}">辅材</a>
+        </li>
+    </ul>
+</div>
+<div class="swiper-container slider2"style="margin-bottom: -5px;">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <a href="#"><img src="__IMG__/focusII1.png" class="img-responsive" alt=""></a>
+        </div>
+        <div class="swiper-slide">
+            <a href="#"><img src="__IMG__/focusII2.png" class="img-responsive" alt=""></a>
+        </div>
+        <div class="swiper-slide">
+            <a href="#"><img src="__IMG__/focusII3.png" class="img-responsive" alt=""></a>
+        </div>
+        <div class="swiper-slide">
+            <a href="#"><img src="__IMG__/focusII4.png" class="img-responsive" alt=""></a>
+        </div>
+        <div class="swiper-slide">
+            <a href="#"><img src="__IMG__/focusII5.png" class="img-responsive" alt=""></a>
+        </div>
+        <div class="swiper-slide">
+            <a href="#"><img src="__IMG__/focusII6.png" class="img-responsive" alt=""></a>
+        </div>
+    </div>
+    <!--<div class="swiper-pagination"></div>-->
+    <div class="swiper-button-prev" style="background-size: 20px 20px!important;"></div>
+    <div class="swiper-button-next" style="background-size: 20px 20px!important;"></div>
+</div>
+<script>
+    var swiper = new Swiper('.slider2', {
+//        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        paginationClickable: true,
+        loop:true,
+        autoplay:3000,
+        speed:600
+    });
+</script>
+
+
+<div class="index-img1">
+    <img src="__IMG__/index-img1.png" alt="">
+</div>
+<div class="index-img2">
+    <img src="__IMG__/index-img2.png" alt="">
+</div>
+<div class="index-img3">
+    <img src="__IMG__/index-img3.png" alt="">
+</div>
+<div class="index-img4">
+    <img src="__IMG__/index-img4-title.png" alt="">
+</div>
+<div class="fwlc-sy bg-fff text-center mart10">
+    <!--<img src="__IMG__/fwlctit.jpg" class="width-full" alt="">-->
+    <div class="swiper-container fwlc-slide">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide s1">
+                <div class="fwlc-item">
+                    <img src="__IMG__/fwlcbg1.jpg" class="img-responsive" alt="">
+                    <div class="title">
+                        在线预约<span>01</span>
+                    </div>
+                    <div class="mask">
+                        <div class="subtitle">
+                            <h3>01</h3>在线预约
+                        </div>
+                        <div class="clearfix"></div>
+                        <p>为您的爱家设计最可行、美观的设计方案沟通装修方案，有问题随时联系设计师修改</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide s2">
+                <div class="fwlc-item">
+                    <img src="__IMG__/fwlcbg2.jpg" class="img-responsive" alt="">
+                    <div class="title">
+                        设计量房<span>02</span>
+                    </div>
+                    <div class="mask">
+                        <div class="subtitle">
+                            <h3>02</h3>设计量房
+                        </div>
+                        <div class="clearfix"></div>
+                        <p>为您的爱家设计最可行、美观的设计方案沟通装修方案，有问题随时联系设计师修改</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide s3">
+                <div class="fwlc-item">
+                    <img src="__IMG__/fwlcbg3.jpg" class="img-responsive" alt="">
+                    <div class="title">
+                        确认方案<span>03</span>
+                    </div>
+                    <div class="mask">
+                        <div class="subtitle">
+                            <h3>03</h3>确认方案
+                        </div>
+                        <div class="clearfix"></div>
+                        <p>为您的爱家设计最可行、美观的设计方案沟通装修方案，有问题随时联系设计师修改</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide s4">
+                <div class="fwlc-item">
+                    <img src="__IMG__/fwlcbg4.jpg" class="img-responsive" alt="">
+                    <div class="title">
+                        逐项验收<span>04</span>
+                    </div>
+                    <div class="mask">
+                        <div class="subtitle">
+                            <h3>04</h3>逐项验收
+                        </div>
+                        <div class="clearfix"></div>
+                        <p>为您的爱家设计最可行、美观的设计方案沟通装修方案，有问题随时联系设计师修改</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide s5">
+                <div class="fwlc-item">
+                    <img src="__IMG__/fwlcbg5.jpg" class="img-responsive" alt="">
+                    <div class="title">
+                        竣工<span>05</span>
+                    </div>
+                    <div class="mask">
+                        <div class="subtitle">
+                            <h3>05</h3>竣工
+                        </div>
+                        <div class="clearfix"></div>
+                        <p>为您的爱家设计最可行、美观的设计方案沟通装修方案，有问题随时联系设计师修改</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide s6">
+                <div class="fwlc-item">
+                    <img src="__IMG__/fwlcbg6.jpg" class="img-responsive" alt="">
+                    <div class="title">
+                        售后服务<span>06</span>
+                    </div>
+                    <div class="mask">
+                        <div class="subtitle">
+                            <h3>06</h3>售后服务
+                        </div>
+                        <div class="clearfix"></div>
+                        <p>为您的爱家设计最可行、美观的设计方案沟通装修方案，有问题随时联系设计师修改</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <script>
+        var appendNumber = 4;
+        var prependNumber = 1;
+        var swiper = new Swiper('.fwlc-slide', {
+            pagination: '.swiper-pagination',
+            slidesPerView: 3,
+            centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 10,
+            loop:true
+        });
+    </script>
+</div>
+<!--<div class="fwdx-sy mart10">-->
+    <!--<img src="__IMG__/fudx.jpg" class="img-responsive" alt="">-->
+<!--</div>-->
+<div class="index-img5">
+    <img src="__IMG__/index-img5.png" alt="">
+</div>
+<div class="index-img6">
+    <img src="__IMG__/index-img6-title.png" alt="">
+</div>
+<div class="jzpp-sy bg-fff text-center mart10">
+    <ul>
+        <li><img src="__IMG__/logo-1.png" alt=""></li>
+        <li><img src="__IMG__/logo-2.png" alt=""></li>
+        <li><img src="__IMG__/logo-3.png" alt=""></li>
+        <li><img src="__IMG__/logo-4.png" alt=""></li>
+        <li><img src="__IMG__/logo-5.png" alt=""></li>
+        <li><img src="__IMG__/logo-6.png" alt=""></li>
+        <li><img src="__IMG__/logo-7.png" alt=""></li>
+        <li><img src="__IMG__/logo-8.png" alt=""></li>
+        <li><img src="__IMG__/logo-9.png" alt=""></li>
+        <li><img src="__IMG__/logo-10.png" alt=""></li>
+        <li><img src="__IMG__/logo-11.png" alt=""></li>
+        <li><img src="__IMG__/logo-12.png" alt=""></li>
+        <li><img src="__IMG__/logo-13.png" alt=""></li>
+        <li><img src="__IMG__/logo-14.png" alt=""></li>
+        <li><img src="__IMG__/logo-15.png" alt=""></li>
+        <li><img src="__IMG__/logo-16.png" alt=""></li>
+        <li><img src="__IMG__/logo-17.png" alt=""></li>
+        <li><img src="__IMG__/logo-18.png" alt=""></li>
+        <li><img src="__IMG__/logo-19.png" alt=""></li>
+        <li><img src="__IMG__/logo-20.png" alt=""></li>
+        <li><img src="__IMG__/logo-21.png" alt=""></li>
+        <li><img src="__IMG__/logo-22.png" alt=""></li>
+        <li><img src="__IMG__/logo-23.png" alt=""></li>
+        <li><img src="__IMG__/logo-24.png" alt=""></li>
+        <li><img src="__IMG__/logo-25.jpg" alt=""></li>
+        <li><img src="__IMG__/logo-26.jpg" alt=""></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<style>
+    .navbar-fixed-bottom{ width: 100%; text-align: center; background: #fff;  box-shadow: 0 0 10px #ccc;}
+    .navbar-fixed-bottom ul li{ width: 33.333%; float: left; line-height: 42px;}
+</style>
+<script>
+    window.onload = function(){
+        var oTop = document.getElementById("to_top");
+        var screenw = document.documentElement.clientWidth || document.body.clientWidth;
+        var screenh = document.documentElement.clientHeight || document.body.clientHeight;
+        oTop.style.left = screenw - oTop.offsetWidth +"px";
+        oTop.style.top = screenh - oTop.offsetHeight + "px";
+        window.onscroll = function(){
+            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+            oTop.style.top = screenh - oTop.offsetHeight + scrolltop +"px";
+        }
+        oTop.onclick = function(){
+            document.documentElement.scrollTop = document.body.scrollTop =0;
+        }
+    }
+</script>
+</body>
+</html>

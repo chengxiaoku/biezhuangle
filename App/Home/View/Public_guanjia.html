@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>装修管家-详情</title>
+    <style>
+        .zxgj-img{ width: 100%; background-color: #ffffff;}
+        .zxgj-img img{width: 100%;}
+    </style>
+</head>
+<body>
+<div class="zxgj-img" style="margin-top: -0.5rem;">
+    <img src="__IMG__/zxgj-xiangqing-1.png" alt="">
+</div>
+<div class="zxgj-img">
+    <img src="__IMG__/zxgj-xiangqing-2.png" alt="">
+</div>
+<div style="height: 0.4rem;background-color: #ffffff;"></div>
+<div class="zxgj-img">
+    <img src="__IMG__/zxgj-xiangqing-3.png" alt="">
+</div>
+<div style="height: 0.4rem; background-color: #ffffff;"></div>
+<div class="zxgj-img">
+    <img src="__IMG__/zxgj-xiangqing-4.png" alt="">
+</div>
+<div style="height: 0.4rem; background-color: #ffffff;"></div>
+<div class="zxgj-img">
+    <img src="__IMG__/zxgj-xiangqing-5.png" alt="">
+</div>
+<div class="zxgj-img">
+    <img src="__IMG__/zxgj-xiangqing-6.png" alt="">
+</div>
+<div style="height: 0.4rem; background-color: #ffffff;"></div>
+<div class="zxgj-img">
+    <img src="__IMG__/zxgj-xiangqing-7.png" alt="">
+</div>
+<div style="height: 0.4rem; background-color: #ffffff;"></div>
+<div class="zxgj-img">
+    <img src="__IMG__/zxgj-xiangqing-8.png" alt="">
+</div>
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth>=640){
+                    docEl.style.fontSize = '100px';
+                }else{
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
+</html>

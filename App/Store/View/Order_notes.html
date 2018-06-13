@@ -1,0 +1,144 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+    <script src="__JS__/main.js"></script>
+    <div class="am-g tpl-g">
+        <include file="./Public/Store/html/header.html" />
+        <include file="./Public/Store/html/sidebar.html" />
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">装修日记列表</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>项目</th>
+                                                <th>标题</th>
+                                                <th>时间</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <volist name="list" id="vo" mod="2">
+                                            <tr class="gradeX" >
+                                                <td>{$vo.name}</td>
+                                                <td>{$vo.info.title}</td>
+                                                <td>
+                                                    <notempty name="vo.info">
+                                                    {$vo.info.create_time|date='Y-m-d',###}
+                                                    </notempty>
+                                                </td>
+                                                <td>
+                                                    <empty name="vo.info">
+                                                    未开始
+                                                    <else/>
+                                                    {$vo.info.status|get_notes_status=###}
+                                                    </empty>
+                                                </td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <empty name="vo.info">
+                                                            <a href="javascript:;" onclick="show_note_add({$deco_id},{$vo.id})">
+                                                                <i class="am-icon-pencil"></i> 添加日记
+                                                            </a>
+                                                            <if condition="allow_add_note($deco_id,$vo['id'])">
+
+                                                            </if>
+                                                        <else/>
+                                                            <switch name="vo.info.status">
+                                                                <case value="2">
+                                                                    <a href="javascript:;" onclick="show_note_edit({$vo.info.id})">
+                                                                        <i class="am-icon-pencil"></i> 编辑
+                                                                    </a>
+                                                                </case>
+                                                                <case value="3">
+                                                                    <a href="javascript:;" onclick="show_note_edit({$vo.info.id})">
+                                                                        <i class="am-icon-pencil"></i> 编辑
+                                                                    </a>
+                                                                </case>
+                                                                <case value="6">
+                                                                    <if condition="is_append($vo['info']['id'])">
+                                                                    <a href="javascript:;" onclick="show_note_append({$vo.info.id})">
+                                                                        <i class="am-icon-pencil"></i> 补充申请
+                                                                    </a>
+                                                                    </if>
+                                                                </case>
+                                                            </switch>
+                                                        </empty>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </volist>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="./Public/Store/html/footer.html" />
+    <script>
+         $(function () {
+            $('#modal_create form').ajaxForm(function (data) {
+                if (data['success']) {
+                    layer.alert(data['info'], function (data) {
+                        layer.close(layer.index);
+                        $("#example-r").load(location.href+" #example-r");
+                    });
+                } else {
+                    layer.msg(data['info'], {
+                        icon: 5
+                    });
+                }
+            });
+        });
+ 
+        function show_note_add(deco_id,node_id){
+            layer.open({
+                type: 2,
+                title: '添加装修日记',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['650px', '90%'],
+                content: "{:U('noteadd')}&deco_id="+deco_id+"&node_id="+node_id,
+                maxmin: true
+            }); 
+        }
+
+        function show_note_edit(id){
+            layer.open({
+                type: 2,
+                title: '编辑装修日记',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['650px', '90%'],
+                content: "{:U('noteedit')}&id="+id,
+                maxmin: true
+            }); 
+        }
+
+        function show_note_append(id){
+            layer.open({
+                type: 2,
+                title: '编辑装修日记',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['650px', '90%'],
+                content: "{:U('noteappend')}&note_id="+id,
+                maxmin: true
+            }); 
+        }
+    </script>
+</body>
+
+</html>

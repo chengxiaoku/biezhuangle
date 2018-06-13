@@ -1,0 +1,76 @@
+<!-- 侧边导航栏 -->
+<div class="left-sidebar">
+    <!-- 用户信息 -->
+    <div class="tpl-sidebar-user-panel">
+        <div class="tpl-user-panel-slide-toggleable">
+            <div class="tpl-user-panel-profile-picture">
+                <img src="{$user_info.icon}" alt="">
+            </div>
+            <span class="user-panel-logged-in-text">
+        <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+        {$user_info.name}
+    </span>
+            <a href="{:U('Set/index')}" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
+        </div>
+    </div>
+    <!-- 菜单 -->
+    <ul class="sidebar-nav">
+        <li class="sidebar-nav-link" >
+            <a href="{:U('index/index')}" id="index">
+                <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+            </a>
+        </li>
+        <li class="sidebar-nav-link" >
+            <a href="{:U('Order/index')}" id="order">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 装修订单
+            </a>
+        </li>
+        <li class="sidebar-nav-link" >
+            <a href="{:U('Designer/index')}" id="designer">
+                <i class="am-icon-users sidebar-nav-link-logo"></i> 设计师
+            </a>
+        </li>
+        <li class="sidebar-nav-link" >
+            <a href="{:U('Funds/index')}" id="funds">
+                <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 财务中心
+            </a>
+        </li>
+        <li class="sidebar-nav-link" >
+            <a href="{:U('Message/index')}" id="message">
+                <i class="am-icon-comment  sidebar-nav-link-logo" ></i> 消息中心
+            </a>
+        </li>
+        <li class="sidebar-nav-link" >
+            <a href="{:U('Password/index')}" id="password">
+                <i class="am-icon-exclamation-circle sidebar-nav-link-logo"></i> 修改密码
+            </a>
+        </li>
+        <li class="sidebar-nav-link" >
+            <a href="{:U('WithdrawsCash/index')}" id="withdrawscash">
+                <i class="am-icon-cc-discover sidebar-nav-link-logo"></i> 提现申请
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- 添加页面选中事件-->
+<script type="text/javascript">
+    $(function (){
+        //获取当前的控制器名称
+        var class_name= "{:CONTROLLER_NAME}";
+
+        id_name = 'index';
+
+        switch (class_name.toLowerCase()){
+            case 'index': id_name = 'index'; break;
+            case 'order': id_name = 'order'; break;
+            case 'designer' : id_name = 'designer'; break;
+            case 'funds' : id_name = 'funds'; break;
+            case 'message' : id_name = 'message'; break;
+            case 'password' : id_name = 'password'; break;
+            case 'withdrawscash' : id_name = 'withdrawscash'; break;
+            default:id_name = 'index';
+        }
+        //给当前的控制器添加选中状态
+        $('#'+id_name).addClass('active');
+    })
+</script>

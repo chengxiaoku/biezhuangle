@@ -1,0 +1,72 @@
+<include file="./Public/Home/html/head.html" />
+<script src="__STATIC__/layer/layer.js"></script>
+<script src="__STATIC__/jquery.form.min.js"></script>
+<script>
+$(function(){
+    $('form').ajaxForm(function(data){
+        if(data['success']){
+            layer.alert(data['info'],function(data){
+                location.href = "{:U('Index/index')}";
+            });
+        }else{
+            layer.msg(data['info']);
+        }
+    });
+});
+</script>
+<div class="form-wrap body-bg" style="padding-top: 185px;padding-bottom: 124px;">
+    <div class="middle1200">
+        <form method="post" class="form r-form">
+            <h1>F1训练系统</h1>
+            <div class="form-row">
+                <div class="form-td"><span>账号：</span></div>
+                <div class="form-td"><input name="username" type="text" placeholder="请设置账号（军官证号）" style="margin-left: 90px;"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-td"><span>昵称：</span></div>
+                <div class="form-td"><input name="nickname" type="text" placeholder="请设置昵称" style="margin-left: 90px;"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-td"><span>密码：</span></div>
+                <div class="form-td"><input name="password" type="password" placeholder="请设置密码" style="margin-left: 90px;"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-td"><span>确认密码：</span></div>
+                <div class="form-td"><input name="repassword" type="password" placeholder="请再一次输入密码" style="margin-left: 30px;"></div>
+            </div>
+            <div class="submit">
+                <button>立即注册</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="txt-row">
+                <div class="form-td pull-left"></div>
+                <div class="form-td pull-right">已有账号？ <a href="#">登录</a></div>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+        <div class="footer middle1200">
+            <div class="lj-list">
+                <ul class="about">
+                    <li><a href="">新手入门</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">竞价成功</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">关于我们</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">新手入门</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">竞价成功</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">关于我们</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">关于我们</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <p class="mar25">未经授权禁止转载、摘编、复制或则建立镜像，如有违反，追究法律责任</p>
+            <p class="">Copyright © 2015-2016 风险训练网 All rights reserved.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

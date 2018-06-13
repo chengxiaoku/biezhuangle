@@ -1,0 +1,28 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="ceshi_Bar">
+	<div class="item-title">
+		<h3>测试模型</h3>
+		<ul class="tab-base">
+			<if condition="Is_Auth('Admin/ceshi/index')">
+			<li><a href="{:U('Admin/ceshi/index')}"><span>列表</span></a></li>
+			</if>
+			<li><a class="current"href="{:U('Admin/ceshi/add')}"><span>新增</span></a></li>
+		</ul>
+	</div>
+</div>
+<form id="ceshi_Form" method="post">
+<table class="table tb-type2 nobdb">
+	<tbody>
+			<tr>
+			<td colspan="2" class="required"><label for="for_test">test:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="test" value="" type="text" class="easyui-textbox" data-options="required:false,multiline:true" style="width:300px; height:80px;"></td>
+			<td class="vatop tips"></td>
+		</tr>	</tbody>
+	<tfoot>
+		<tr class="tfoot">
+			<td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#ceshi_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+		</tr>
+	 </tfoot>
+</table>
+</form></block>

@@ -1,0 +1,56 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Haibao_Bar">
+	<div class="item-title">
+		<h3>海报</h3>
+		<ul class="tab-base">
+			<if condition="Is_Auth('Admin/Haibao/index')">
+			<li><a href="{:U('Admin/Haibao/index')}"><span>列表</span></a></li>
+			</if>
+			<if condition="Is_Auth('Admin/Haibao/add')">
+			<li><a href="{:U('Admin/Haibao/add')}"><span>新增</span></a></li>
+			</if>
+			<li><a class="current" href="#"><span>更新</span></a></li>
+		</ul>
+	</div>
+</div>
+<form id="Haibao_Form" method="post">
+<table class="table tb-type2 nobdb">
+	<tbody>
+			<tr>
+			<td colspan="2" class="required"><label for="for_name">姓名:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="name" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["name"]}" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_address">区域:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="address" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["address"]}" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_taren">他人:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="taren" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["taren"]}" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_qinghua">情话:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="qinghua" value="{$_info["qinghua"]}" type="text" class="easyui-textbox" data-options="required:false,multiline:true" style="width:300px; height:80px;"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_img">图片:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="img" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["img"]}" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>	</tbody>
+	<tfoot>
+		<tr class="tfoot">
+			<td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#Haibao_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+		</tr>
+	 </tfoot>
+</table>
+<input name="id" type="hidden" value="{:I('get.id')}" />
+</form></block>

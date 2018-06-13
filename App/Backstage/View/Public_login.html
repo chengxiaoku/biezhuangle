@@ -1,0 +1,44 @@
+<include file="./Public/Backstage/html/head.html" />
+<body data-type="login">
+    <script src="__JS__/theme.js"></script>
+    <script>
+        $(function () {
+            $('form').ajaxForm(function (data) {
+                console.log(data);
+                if (data['success']) {
+                    layer.alert(data['info'], function (data) {
+                        location.href = "{:U('Index/index')}";
+                    });
+                } else {
+                    layer.msg(data['info'], {
+                        icon: 5
+                    });
+                }
+            });
+        });
+    </script>
+    <div class="am-g tpl-g">
+        <div class="tpl-login">
+            <div class="tpl-login-content">
+                <!-- login 图-->
+                <div class="tpl-login-logo">
+
+                </div>
+                <form method="post" class="am-form tpl-form-line-form">
+                    <div class="am-form-group">
+                        <input type="text" class="tpl-form-input" name="name" placeholder="请输入账号">
+                    </div>
+                    <div class="am-form-group">
+                        <input type="password" class="tpl-form-input" name="password" placeholder="请输入密码">
+                    </div>
+                    <div class="am-form-group">
+                        <button type="submit" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <include file="./Public/Backstage/html/footer.html" />
+</body>
+
+</html>

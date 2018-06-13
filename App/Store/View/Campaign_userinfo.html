@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>别装了家装季信息</title>
+</head>
+<style>
+    tr td{
+        margin-left: 50px;
+        width: 90px;
+    }
+</style>
+<body>
+<h3>充值人数:{$num}</h3>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>用户ID</th>
+                <th>电话</th>
+                <th>昵称</th>
+                <th>电子邮箱</th>
+                <th>联系电话</th>
+                <th>地址</th>
+                <th>充值金额/元</th>
+                <th>充值方式</th>
+                <th>时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name="data" item="vo" >
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.username}</td>
+                    <td>{$vo.nickname}</td>
+                    <td>{$vo.email}</td>
+                    <td>{$vo.phone}</td>
+                    <td>{$vo.address}</td>
+                    <td>{$vo.amount}</td>
+                    <td>
+                        <if condition="$vo['msg'] eq 1">
+                                微信支付
+                            <else/>
+                                支付宝
+                        </if>
+                    </td>
+                    <td>{$vo.timestamp}</td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+</body>
+</html>

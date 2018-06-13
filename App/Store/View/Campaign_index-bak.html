@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <style>
+        body{
+            background-image: url("__IMG__/bg1.png");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        .one{
+            width:400px;
+            height: 500px;
+            /*border: 5px solid #4cae4c;*/
+            float: left;
+            margin-left: 30px;
+            background:rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 0;
+        }
+        .one p{
+            display: inline-block;
+            color: #f20044;
+            margin: 0 20px;
+        }
+        ul,li{
+            list-style: none;
+        }
+        .two{
+            width: 300px;
+            /*height: 500px;*/
+            /*border: 1px solid black;*/
+            text-align: center;
+            float: right;
+            position: relative;
+            /*right: 100px;*/
+            top: 100px;
+            /*border: 1px solid red;*/
+        }
+        .two h1{
+            color: #94dc5e;
+        }
+        .two p{
+            font-size: 180px;
+            width: 260px;
+            font-weight: bold;
+            position: relative;
+            /*left: -20px;*/
+            color: #94dc5e;
+            /*border:1px solid red;*/
+            border-radius: 50%;
+            box-shadow: 10px 10px 5px #094865 inset;
+            display: inline-block;
+            background-color: #2f6f8d;
+        }
+        .zero{
+            width: 100%;
+            margin: 0 auto;
+            /*border: 1px solid blue;*/
+            overflow: hidden;
+            position: relative;
+            top: 250px;
+        }
+        .one-ul{position: relative;top: 800px;}
+        .one-list{
+            margin: 10px 0;
+            text-align: center;
+            position: relative;
+            left: -20px;
+            font-size: 15px;
+            color: #ffffff;
+
+        }
+        @media (min-width: 1366px) {
+
+            .zero{width: 100%;top: 100px;}
+        }
+
+        @media (min-width: 1440px) {
+            .zero{width: 100%;top: 200px;}
+        }
+
+        @media (min-width: 1680px) {
+            .zero{width: 100%;top: 250px;}
+        }
+        @media (min-width: 1920px) {
+            .zero{width: 100%}
+        }
+    </style>
+</head>
+<body>
+<div class="zero">
+    <div class="one">
+        <ul class="one-ul">
+            <li class="one-list">用户<p>159****3679</p>已充值<p>200</p>元</li>
+
+        </ul>
+    </div>
+    <div class="two"><h1>已有</h1><p id="num">0</p><h1>加入我们</h1></div>
+    <div class="clearfix"></div>
+</div>
+</body>
+<script>
+    //数据库ID指针
+    id = 0;
+    arr = new Array();
+    newarr = new Array();
+    //记录用户数
+    _num = 0;
+
+    //end max_num
+    //虚拟用户最大生成量
+    max_num = 56;
+    //不可或缺
+    t = 1;
+    //随机时间
+
+    $(function(){
+        //查询数据库数据已有的条数
+         var get_url = "{:U('Campaign/get_user_lastdata_sum')}";
+         $.get(get_url, {}, function (data, textStatus){
+            id = parseInt(data) +1;
+         });
+
+        function show() {
+
+            //向后台发送异步请求
+            _id = id;
+            newarr = send_data(_id);
+
+           //增加人数
+            if(_num < parseInt(max_num)){
+                $("#num").text(_num++);
+            }else{
+                if(newarr){
+                    $("#num").text(_num++);
+                }else{
+                    $("#num").text(_num);
+                }
+
+            }
+            if($.isArray(newarr)){
+
+                if(t == 1){
+                    $.when($(".one-ul").animate({
+                        'top' : "0px"
+                    },3000)).then(
+                            $(".one").append("<ul class='one-ul'><li class='one-list'>用户<p>"+gen_user_info()+"</p>已充值<p>"+200+"</p>元</li></ul>")
+                    )
+                }else{
+                    $.when($(".one-ul").animate({
+                        'top' : "0px"
+                    },3000)).then(
+                            $(".one").append("<ul class='one-ul'><li class='one-list'>用户<p>"+newarr[0]+"</p>已充值<p>"+newarr[1]+"</p>元</li></ul>")
+                    )
+                }
+            }
+
+            t=2;
+        }
+
+        function start_fun(){
+            show();
+            if(_num > 60){
+                //越往后面越慢
+                setTimeout(start_fun,parseInt(6000*Math.random()));
+            }else{
+                setTimeout(start_fun,parseInt(3000*Math.random()));
+            }
+
+        }
+        //setTimeout(start_fun,parseInt(1500*Math.random()));
+        //启动定时器  等待6秒开始运行
+        setTimeout(start_fun,parseInt(6000));
+    });
+    
+    //向后台发送异步
+    //状态开始 或者是进行中
+    function send_data(_id) {
+        var get_url = "{:U('Campaign/get_user_data')}";
+        $.get(get_url, {id:_id}, function (data, textStatus){
+            if(data == 1){
+                //生成虚拟用户
+                //如果虚拟数据达到最大值
+
+                if(_num < parseInt(max_num)){
+                    arr[0] = gen_user_info();
+                    arr[1] = 200;
+                }else{
+                    arr = false;
+                }
+            }else{
+                arr = new Array();
+                var _data = JSON.parse(data);
+                var str = _data.username;
+                if($.trim(str) == ''){
+                    arr[0] = _data.nickname;
+                }else{
+                    arr[0] =str.substring(0,3)+'****'+str.substring(7,11);
+                }
+                arr[1] = _data.trade_amount;
+                    id++; t=2;
+            }
+        });
+        return arr ;
+    }
+
+    //生成用户充值信息(虚拟)
+    function gen_user_info(){
+        //姓氏
+        //var name = ['赵','王','程','李','周','吴','郑','王','张','孔','魏','韩','杨','许','冯']
+        var name = ['150','157','130','159','156','135','151','138', '139','181', '183', '187','158', '136', '132', '130',  '184', '182', '152'];
+        //15638748938
+        var num = parseInt(name.length-1);
+        var _num = Math.floor(Math.random()*num);
+        return name[_num]+gen_number(3);
+    }
+    //生成 末尾随机数字
+    function gen_number(len){
+        //获取还差多少的数字
+        var _len = 11 - parseInt(len);
+        var str = '';
+        for(var i=0 ; i<_len ; i++){
+            //生成1-9的随机数
+            if(0 <= i && i < 4){
+                str += '*';
+            }else{
+                str += String(Math.floor(Math.random()*10));
+            }
+        }
+        return str;
+    }
+
+ $(function(){
+     function timeNum(){
+         var liNum = document.getElementsByClassName("one-ul").length;
+         if(liNum > 16){
+             $(".one").each(function(){ $(this).children().first().remove()  });
+         }
+     }
+     setInterval(timeNum,1000);
+ })
+
+
+</script>
+</html>

@@ -1,0 +1,303 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+    <script src="__JS__/main.js"></script>
+    <div class="am-g tpl-g">
+        <include file="./Public/Store/html/header.html" />
+        <include file="./Public/Store/html/sidebar.html" />
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">订单列表</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>装修方案</th>
+                                                <th>姓名</th>
+                                                <th>电话</th>
+                                                <th>地址</th>
+                                                <th>面积</th>
+                                                <th>户型</th>
+                                                <th>类型</th>
+                                                <th>方案</th>
+                                                <th>总价</th>
+                                                <th>申请时间</th>
+                                                <th>开始时间</th>
+                                                <th>结束时间</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <volist name="list" id="vo" mod="2">
+                                            <tr class="gradeX" >
+                                                <td>{$vo.id}--{$vo.title}</td>
+                                                <td>{$vo.realname}</td>
+                                                <td>{$vo.phone}</td>
+                                                <td>{$vo.address}</td>
+                                                <td>{$vo.area}</td>
+                                                <td>{$vo.room}室{$vo['hall']+$vo['dining']}厅{$vo.cook}厨{$vo.toilet}卫{$vo.balcony}阳</td>
+                                                <td>{$vo['type']==1?'毛坯房':'翻新房'}</td>
+                                                <td>{$vo.pro_title}</td>
+                                                <td>{$vo.total_price}</td>
+                                                <td>{$vo.create_time|date='Y-m-d',###}</td>
+                                                <td>{$vo.start_date|date='Y-m-d',###}</td>
+                                                <td>{$vo.end_date|date='Y-m-d',###}</td>
+                                                <td>{$vo.status|get_order_status=###}</td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;" onclick="show_goods({$vo.id})">
+                                                            <i class="am-icon-list-ul"></i> 主材
+                                                        </a>
+                                                         <a href="javascript:;" onclick="show_works({$vo.id})">
+                                                            <i class="am-icon-align-left"></i> 施工进度
+                                                        </a>
+                                                        <switch name="vo.status">
+                                                            <case value="1|8">
+                                                                <a href="javascript:;" onclick="create_comp({$vo.id})">
+                                                                    <i class="am-icon-file-text"></i> 生成合同
+                                                                </a>
+                                                                <a href="javascript:;" onclick="reject_comp({$vo.id})">
+                                                                    <i class="am-icon-file-text"></i> 驳回合同
+                                                                </a>
+                                                            </case>
+                                                            <case value="4|5">
+                                                                <a href="{:U('Order/notes',array('deco_id'=>$vo['id']))}">
+                                                                    <i class="am-icon-pencil"></i> 发布日记
+                                                                </a>
+                                                            </case>
+                                                            <case value="6">
+                                                                <a href="{:U('Order/notes',array('deco_id'=>$vo['id']))}">
+                                                                    <i class="am-icon-align-justify"></i> 查看日记
+                                                                </a>
+                                                            </case>
+                                                        </switch>
+                                                        <!--<a href="{:U('design/index',array('deco_id'=>$vo['id']))}">
+                                                            <i class="am-icon-picture-o"></i> 设计图
+                                                        </a>-->
+                                                        <!-- 2017年7月28号 功能关闭 禁止添加 设计图-->
+                                                        <a href="javascript:;" onclick="show_design({$vo.id})">
+                                                            <i class="am-icon-picture-o"></i> 设计图
+                                                        </a>
+
+                                                        <a href="{:U('Api/decorate/compact',array('user_id'=>$vo['userid']))}">
+                                                            <i class="am-icon-align-justify"></i> 查看合同
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </volist>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination">
+                                            {$page}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_create" style="position: fixed;">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">生成合同
+                <small style="padding: 5px;color: #888;">为了您的权益,请认真填写合同信息。</small>
+            </div>
+            <div class="am-modal-bd">
+                <form method="post" action="{:U('Order/create_comp')}" class="am-form tpl-form-line-form">
+                    <input id="chk_id" name="id" type="hidden">
+                    <div class="am-form-group">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">封面图片</label>
+                        <div class="am-u-sm-9" >
+                            <div class="am-form-group am-form-file">
+                                <div class="uploadBtn" style="height: 45px;">上传图片</div>
+                                <small style="padding: 15px;color: #888;">双击图片删除。</small>
+                            </div>
+                            <div id="img_area"></div>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="start_date" class="am-u-sm-3 am-form-label">开始时间</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" name="start_date" class="am-form-field tpl-form-no-bg" data-am-datepicker="{format: 'yyyy-mm-dd'}" readonly required>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="end_date" class="am-u-sm-3 am-form-label">结束时间</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" name="end_date" class="am-form-field tpl-form-no-bg" data-am-datepicker="{format: 'yyyy-mm-dd'}" readonly required>
+                        </div>
+                    </div>
+                    <div class="am-alert am-alert-danger" style="display: none">
+                        <p>开始日期应小于结束日期！</p>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-6 am-u-sm-push-3" style="margin-top: 35px;">
+                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="modal_reject">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">驳回订单合同
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <form method="post" action="{:U('Order/reject_comp')}" class="am-form tpl-form-line-form">
+                    <input id="reject_id" name="id" type="hidden">
+                    <div class="am-form-group">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">内容</label>
+                        <div class="am-u-sm-9">
+                            <textarea rows="5" name="content" placeholder="请输入驳回内容"></textarea>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 35px;">
+                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <style>
+    .am-form-group{display: flex;}
+    .am-datepicker-dropdown {
+        z-index: 198910160; 
+    }
+    </style>
+    <include file="./Public/Store/html/footer.html" />
+    <script>
+        var index = parent.layer.getFrameIndex(window.name);
+        var uploader = WebUploader.create({
+            auto: true,
+            pick: '.uploadBtn',
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*',
+            },
+            thumb:{
+                width: 320,
+                height: 422,
+                quality: 100,
+                allowMagnify: false,
+                crop: false,
+                type: 'image/jpeg'
+            },
+        });
+        uploader.onFileQueued = function( file ) {
+            uploader.makeThumb( file, function( error, src ) {
+                if (error) return;
+                var html = '';
+                html += '<input name="coverimg" type="hidden" value="'+src+'">';
+                html += '<img src="'+src+'" style="max-width:150px" ondblclick="del_img(this)">';
+                $('#img_area').html(html);
+                //parent.layer.iframeAuto(index);
+            });
+        }
+        function del_img(obj){
+            layer.confirm('您确定要删除该图片？', function(i){
+                $(obj).prev().remove();
+                $(obj).remove();
+                layer.close(i);
+            });
+            
+        }
+
+        function show_goods(id){
+            var index = layer.open({
+                type: 2,
+                content: "{:U('Goods/index')}&deco_id="+id,
+                area: ['1200px', '90%'],
+                maxmin: true
+            });
+        }
+
+        function show_works(id){
+            var index = layer.open({
+                type: 2,
+                content: "{:U('Works/index')}&deco_id="+id,
+                area: ['1200px', '90%'],
+                maxmin: true
+            });
+        }
+
+        function show_design(id){
+            var index = layer.open({
+                type: 2,
+                content: "{:U('Design/index')}&deco_id="+id,
+                area: ['1200px', '90%'],
+                maxmin: true
+            });
+        }
+
+        function create_comp(id){
+            $('#modal_create').css('position','inherit');
+            $("#chk_id").val(id);
+            var start_date = new Date().Format("yyyy-MM-dd");
+            $("#modal_create input[name='start_date']").datepicker('setValue', start_date);
+            layer.open({
+                type: 1,
+                title: false,
+                //closeBtn: true,
+                area: '516px',
+                skin: 'layui-layer-nobg', //没有背景色 
+                //shadeClose: true,
+                content: $('#modal_create')
+            });
+        }
+
+        function reject_comp(id){
+            $("#reject_id").val(id);
+            $('#modal_reject').modal();
+        }
+        
+         $(function () {
+            $('#modal_create form').ajaxForm(function (data) {
+                if (data['success']) {
+                    layer.alert(data['info'], function (data) {
+                        $("#example-r").load(location.href+" #example-r");
+                        layer.closeAll();
+                    });
+                } else {
+                    layer.msg(data['info'], {
+                        icon: 5
+                    });
+                }
+            });
+
+            $('#modal_reject form').ajaxForm(function (data) {
+                if (data['success']) {
+                    layer.alert(data['info'], function (data) {
+                        layer.close(layer.index);
+                        $('#modal_reject').modal('close');
+                        $("#example-r").load(location.href+" #example-r");
+                    });
+                } else {
+                    layer.msg(data['info'], {
+                        icon: 5
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

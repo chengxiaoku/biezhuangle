@@ -1,0 +1,158 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+    <script src="__JS__/main.js"></script>
+    <div class="am-g tpl-g">
+        <include file="./Public/Store/html/header.html" />
+        <include file="./Public/Store/html/sidebar.html" />
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">设计师列表</div>
+                            </div>
+
+                            <div class="widget-body  am-fr">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button type="button" class="am-btn am-btn-default am-btn-success" onclick="show_add()"><span class="am-icon-plus"></span> 新增</button>
+                                            <!-- 搜索 -->
+                                            <div class="am-u-lg-6" style="float: right">
+                                                <form method="get" action="{:U('Designer/search')}"  class="am-form tpl-form-line-form">
+                                                    <div class="am-input-group">
+                                                  <span class="am-input-group-btn">
+                                                    <button class="am-btn am-btn-default" type="submit" ><span class="am-icon-search"></span> </button>
+                                                  </span>
+                                                        <input type="text" value="{$se_val|default=''}" id="search_text" name="val" class="am-form-field" placeholder="请输入姓名">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- 搜索 end-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black" id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>头像</th>
+                                                <th>姓名</th>
+                                                <th>电话</th>
+                                                <th>微信</th>
+                                                <th>工作年限</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <volist name="list" id="vo" mod="2">
+                                            <tr class="gradeX" >
+                                                <td><img src="{$vo.photo}" class="tpl-table-line-img" height="65"></td>
+                                                <td class="am-text-middle">{$vo.name}</td>
+                                                <td class="am-text-middle">{$vo.phone}</td>
+                                                <td class="am-text-middle">{$vo.wechat}</td>
+                                                <td class="am-text-middle">{$vo.year}</td>
+                                                <td class="am-text-middle">
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;" onclick="show_photo({$vo.id})">
+                                                            <i class="am-icon-picture-o"></i> 案例图
+                                                        </a>
+                                                        <a href="javascript:;" onclick="show_edit({$vo.id})">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del" onclick="del({$vo.id})">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </volist>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination">
+                                            {$page}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <include file="./Public/Store/html/footer.html" />
+    <script>
+
+        function show_photo(id){
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '添加设计师案例图',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['900px', '90%'],
+                content: "{:U('photo')}&desg_id="+id,
+            }); 
+        }
+
+        function show_add(id){
+            layer.open({
+                type: 2,
+                title: '添加设计师',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['650px', '80%'],
+                content: "{:U('add')}&id="+id,
+            }); 
+        }
+        function show_edit(id){
+            layer.open({
+                type: 2,
+                title: '编辑设计师',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['650px', '750px'],
+                content: "{:U('edit')}&id="+id,
+            }); 
+        }
+        function del(id){
+            layer.confirm('您确定删除该条信息？',function(){
+                $.post("{:U('del')}",{id:id},function(data){
+                    if (data['success']) {
+                        layer.alert(data['info'],function(){
+                            layer.close(layer.index);
+                            $("#example-r").load(location.href+" #example-r");
+                        });        
+                    }else{
+                        layer.msg(data['info'], {icon: 5 });
+                    }
+                });
+                
+            });
+        }
+        
+         $(function () {
+            $('#modal_create form').ajaxForm(function (data) {
+                if (data['success']) {
+                    layer.alert(data['info'], function (data) {
+                        layer.close(layer.index);
+                        $('#modal_create').modal('close');
+                        $("#example-r").load(location.href+" #example-r");
+                    });
+                } else {
+                    layer.msg(data['info'], {icon: 5 });
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

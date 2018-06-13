@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>装修日记</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/fenxiang-biezhuangle.css">
+    <link rel="stylesheet" href="__CSS__/liu.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/TouchSlide.js"></script>
+    <script src="__JS__/jquery.flexslider-min.js"></script>
+    <script src="__JS__/swiper.jquery.min.js"></script>
+</head>
+<style>
+    .zxrj-part-content-right-img{
+        float: left;
+    }
+    .bigimg{
+        position: fixed!important;
+        top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);
+        left: 0;
+        z-index: 11111;
+        /*border: 1px solid red;*/
+    }
+    .bigimg img{
+        width: 100%;
+    }
+    /*关闭按钮*/
+    .closeimg{
+        width: 0.5rem;
+        height: 0.5rem;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        text-align: center;
+        line-height: 0.5rem;
+        border-radius: 100%;
+        position: fixed;
+        top: 0.5rem;
+        right: 0.5rem;
+        z-index: 111111;
+    }
+    /*上一张按钮*/
+    .previmg{
+        width: 0.5rem;
+        height: 0.5rem;
+        border: 1px solid #ffffff;
+        background-color: #eeeeee;
+        color: #000000;
+        text-align: center;
+        line-height: 0.4rem;
+        border-radius: 100%;
+        position: fixed;
+        top: 50%;
+        z-index: 111111;
+        font-size: 0.5rem;
+    }
+    /*下一张按钮*/
+    .nextimg{
+        width: 0.5rem;
+        height: 0.5rem;
+        border: 1px solid #ffffff;
+        background-color: #eeeeee;
+        color: #000000;
+        text-align: center;
+        line-height: 0.4rem;
+        border-radius: 100%;
+        position: fixed;
+        top: 50%;
+        right: 0;
+        z-index: 111111;
+        font-size: 0.5rem;
+    }
+    /*顶部图片*/
+    .zxrj-part-top-img{
+        height: 3.2rem;
+    }
+    .zxrj-part-top-img img{
+        height: 3.2rem;
+    }
+    /*节点标题*/
+    .zxrj-part-dashboard-title{
+        width: 100%;
+        text-align: center;
+        font-size: 0.3rem;
+    }
+    /*节点进度*/
+    .zxrj-part-dashboard-part{
+        width: 100%;
+        text-align: center;
+        font-size: 0.3rem;
+    }
+    .zxrj-part-dashboard-part p{
+        display: inline-block;
+    }
+    .zxrj-part-dashboard-part-wai{
+        width: 75%;
+        height: 0.3rem;
+        background-color: #ebebeb;
+        display: inline-block;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+    .zxrj-part-dashboard-part-nei{
+        background-color: #3d9bec;
+        width: 10%;
+        height: 0.3rem;
+        /*border-bottom-left-radius: 20px;*/
+        /*border-top-left-radius: 20px;*/
+    }
+    /*节点内容*/
+    .zxrj-part-dashboard-main{
+        width: 100%;
+        text-align: center;
+        font-size: 0.3rem;
+    }
+</style>
+<body style="background-color: #ffffff;">
+<header class="zxgs-header navbar-fixed-top" style="text-align: center;border-bottom: none;z-index: 1111;">
+
+    <p style="display: inline-block;">装修日记</p>
+    <div class="clearfix"></div>
+</header>
+<div style="height: 0.83rem;"></div>
+<div class="zxrj-part-top">
+    <div class="zxrj-part-top-img"><img src="{$info.coverimg}" alt=""></div>
+    <ul>
+        <li class="zxrj-part-top-1"><p>施工中</p></li>
+        <!--<li class="zxrj-part-top-2"><p>{$info.title}</p></li>
+        <li class="zxrj-part-top-3"><p>{$info.address}</p></li>-->
+    </ul>
+</div>
+<div style="height: 1rem;"></div>
+<!--{$info.coverimg}{$info.title}{$info.address}-->
+<div class="zxrj-part-tab">
+    <ul>
+        <li class="zxrj-part-tab-title"><p>项目管理团队</p></li>
+        <li class="zxrj-part-tab-button">
+            <div class="zxrj-part-tab-button-logo"><img src="__IMG__/zxrj-part-tab-1.png" alt=""></div>
+            <p>{$info.comp_name}</p>
+            <!--<div class="zxrj-part-tab-button-click"><img src="__IMG__/user-center-tab-arrow.png" alt=""></div>-->
+            <div class="zxrj-part-tab-button-img"><img src="{$info.comp_icon}" alt=""></div>
+            <div class="clearfix"></div>
+        </li>
+        <li class="zxrj-part-tab-button">
+            <div class="zxrj-part-tab-button-logo"><img src="__IMG__/zxrj-part-tab-2.png" alt=""></div>
+            <p>{$info.butler_name}</p>
+            <div class="zxrj-part-tab-button-img"><img src="{$info.butler_photo}" alt=""></div>
+            <!--<div class="zxrj-part-tab-button-click"><img src="__IMG__/user-center-tab-arrow.png" alt=""></div>-->
+            <!--<div class="zxrj-part-tab-button-img"><img src="images/zxrj-part-tab-4.png" alt=""></div>-->
+            <div class="clearfix"></div>
+        </li>
+        <!--
+        <li class="zxrj-part-tab-button">
+            <div class="zxrj-part-tab-button-logo"><img src="__IMG__/zxfa-03.png" alt=""></div>
+            <p>装修效果图</p>
+            <div class="zxrj-part-tab-button-click"><img src="__IMG__/user-center-tab-arrow.png" alt=""></div>
+
+            <div class="clearfix"></div>
+        </li>-->
+    </ul>
+</div>
+<div class="zxrj-part-nav zxgj-swiper">
+    <!--<ul>-->
+    <!--<li><div class="zxrj-part-nav-top"><img src="images/zxrj-part-nav.png" alt=""></div><div class="zxrj-part-nav-bottom"><img src="images/cwzx-delta.png" alt=""style="opacity: 1"></div></li>-->
+    <!--<li><div class="zxrj-part-nav-top"><img src="images/zxrj-part-nav.png" alt=""></div><div class="zxrj-part-nav-bottom"><img src="images/cwzx-delta.png" alt=""style="opacity: 0.1"></div></li>-->
+    <!--<li><div class="zxrj-part-nav-top"><img src="images/zxrj-part-nav.png" alt=""></div><div class="zxrj-part-nav-bottom"><img src="images/cwzx-delta.png" alt=""style="opacity: 0.1"></div></li>-->
+    <!--<li><div class="zxrj-part-nav-top"><img src="images/zxrj-part-nav.png" alt=""></div><div class="zxrj-part-nav-bottom"><img src="images/cwzx-delta.png" alt=""style="opacity: 0.1"></div></li>-->
+    <!--<li><div class="zxrj-part-nav-top"><img src="images/zxrj-part-nav.png" alt=""></div><div class="zxrj-part-nav-bottom"><img src="images/cwzx-delta.png" alt=""style="opacity: 0.1"></div></li>-->
+    <!--</ul>-->
+    <div class="swiper-container swiper-container-zxgj">
+        <div class="swiper-wrapper">
+            <volist name="info.notes" id="vo">
+
+                <if condition="$key lt 10">
+                    <div class="swiper-slide swiper-slide-zxrj"><a href="#zxrj-part-{$key}"><img src="__IMG__/zxrj-0{$key+1}.png" alt=""></a></div>
+                    <else/>
+                    <div class="swiper-slide swiper-slide-zxrj"><a href="#zxrj-part-{$key}"><img src="__IMG__/zxrj-{$key+1}.png" alt=""></a></div>
+                </if>
+
+            </volist>
+
+            <div class="swiper-slide swiper-slide-zxrj"><a href="#zxrj-part-1"><img src="__IMG__/zxrj-02.png" alt=""></a></div>
+
+        </div>
+        <div class="swiper-pagination swiper-pagination-zxgj"></div>
+    </div>
+</div>
+<div class="zxrj-part-dashboard">
+    <!--<img src="__IMG__/pan{$info.curr_node}.png" alt="">-->
+    <ul>
+        <li style="height: 0.1rem"></li>
+        <li class="zxrj-part-dashboard-title"><p>当前节点：节点{$info.curr_node}</p></li>
+        <li style="height: 0.1rem"></li>
+        <li class="zxrj-part-dashboard-part"><p>0%</p><div class="zxrj-part-dashboard-part-wai"><div class="zxrj-part-dashboard-part-nei"></div></div><p>100%</p></li>
+        <li style="height: 0.2rem"></li>
+        <li class="zxrj-part-dashboard-main"><p>装修进度：{$num}% {$info.curr_node_name}</p></li>
+        <li style="height: 0.2rem"></li>
+    </ul>
+</div>
+<!--<div style="height: 0.15rem;background-color: #ebebeb;"></div>-->
+<div class="zxrj-part-content">
+    <h1 class="zxrj-part-content-title">每日施工播报</h1>
+    <div style="height: 0.2rem;"></div>
+    <script type="text/javascript">
+
+        var arr = new Array();
+    </script>
+    <?php $pp = 0 ?>
+    <volist name="info.notes" id="vo">
+        <div class="zxrj-part-content-list" id="zxrj-part-{$key}">
+            <ul class="zxrj-part-content-left">
+                <li class="zxrj-part-content-left-circle"></li>
+                <li class="zxrj-part-content-left-line"></li>
+            </ul>
+            <ul class="zxrj-part-content-right">
+                <li class="zxrj-part-content-right-time-type">
+                    <div class="zxrj-part-content-right-time"><p>{$vo.create_time|date='Y/m/d',###}</p></div>
+                    <!--<div class="zxrj-part-content-right-type">管家日记</div>-->
+                    <div class="clearfix"></div>
+                </li>
+                <li class="zxrj-part-content-right-title">
+                    <p class="zxrj-part-content-right-title-title">{$vo.title}</p>
+
+                    <if condition="$vo['status'] eq 4">
+                        <p class="zxrj-part-content-right-title-type">已完成</p>
+                        <else/>
+                        <p class="zxrj-part-content-right-title-type" style="background-color: #ff2e51;">施工中</p>
+                    </if>
+
+                </li>
+                <li class="zxrj-part-content-right-content"><p>{$vo.title}</p></li>
+                <li class="zxrj-part-content-right-img-list">
+                    <volist name="vo.photos" id="img">
+                        <script>
+                            arr.push("{$img.href}");
+                        </script>
+                        <?php $pp++ ?>
+                        <div class="zxrj-part-content-right-img" pp='{$pp}'><img src="{$img.href}" alt=""></div>
+                    </volist>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <div style="width: 100%" class="bigimg" id="img1">
+            <img src="" alt="">
+        </div>
+
+    </volist>
+</div>
+<!--<div class="zxrj-part-content-right-img-big" style="width: 100%;"><img src="https://www.baidu.com/img/bd_logo1.png" alt=""></div>-->
+<div class="closeimg">X</div>
+<div class="previmg">&lt</div>
+<div class="nextimg">&gt</div>
+<div id="zxrj-cover"></div>
+</body>
+<script>
+    //2017 年  7 月 29 禁用
+    /*var wid = "{$num}";
+    $('.zxrj-part-dashboard-part-nei').css('width',wid+'%');*/
+    _pp = 0;
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=640){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+    window.onload=function(){
+        $(".bigimg").hide();
+        $(".closeimg").hide();
+        $(".nextimg").hide();
+        $(".previmg").hide();
+    };
+    $(".zxrj-part-content-right-img").click(function(){
+         _pp = $(this).attr('pp');
+        $("#zxrj-cover").show();
+        $("body").css("overflow","hidden");
+        $("#img1").children('img').attr('src',arr[_pp-1]);
+        $(".bigimg").show();
+        $(".closeimg").show();
+        $(".nextimg").show();
+        $(".previmg").show();
+    });
+    $(".closeimg").click(function(){
+        $(this).hide();
+        $("body").css("overflow","");
+        $(".bigimg").hide();
+        $("#zxrj-cover").hide();
+        $(".nextimg").hide();
+        $(".previmg").hide();
+    });
+    //下一个
+    $(".nextimg").click(function(){
+        var next_num = parseInt(_pp)+1;
+        _pp++;
+        $("#img1").children('img').attr('src',arr[next_num]);
+    });
+    //上一个
+    $('.previmg').click(function (){
+        var prev_num = parseInt(_pp)-1;
+        _pp--;
+        $("#img1").children('img').attr('src',arr[prev_num]);
+    });
+
+    var swiper = new Swiper('.swiper-container-zxgj', {
+//        pagination: '.swiper-pagination-zxgj',
+        slidesPerView: 5,
+        paginationClickable: true,
+        spaceBetween: 30,
+        freeMode: true
+    });
+//    var swiper = new Swiper('.swiper-container-img', {
+////        pagination: '.sjs-pagination',
+//        paginationType: 'fraction',
+//        loop:null
+//    });
+</script>
+</html>

@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no"/>
+    <title>别装了-图库详情</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/swiper.jquery.min.js"></script>
+</head>
+<style>
+    /*清除默认样式*/
+    body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+    body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+    h1, h2, h3, h4, h5, h6{ font-size:100%; }
+    address, cite, dfn, em, var { font-style:normal; }
+    code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+    small{ font-size:12px; }
+    ul, ol { list-style:none; }
+    a { text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    sup { vertical-align:text-top; }
+    sub{ vertical-align:text-bottom; }
+    legend { color:#000; }
+    fieldset, img { border:0; }
+    button, input, select, textarea { font-size:100%; }
+    table { border-collapse:collapse; border-spacing:0; }
+    /*整体样式*/
+    .tuku-part{
+        width: 100%;
+        margin: 1rem 0;
+    }
+    .tuku-part ul{
+        width: 100%;
+    }
+    /*标题样式*/
+    .nav-top{
+        /*border: 1px solid red;*/
+        padding: 0.3rem;
+        margin: 0.5rem 0;
+    }
+    .nav-top h1{
+        font-size: 0.5rem;
+        font-weight: bold;
+    }
+    .nav-top div{
+        background-color: #f8f8f8;
+        border-radius: 30px;
+        display: inline-block;
+        padding: 0.1rem 0.3rem;
+        margin: 0.2rem 0;
+    }
+    .nav-top p{
+        font-size: 0.3rem;
+        color: #9b9b9b;
+    }
+    /*图片样式*/
+    .tuku-img{
+        width: 100%;
+    }
+    .tuku-img img{
+        width: 100%;
+    }
+    /*文字描述样式*/
+    .tuku-p{
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 0 0.3rem;
+    }
+    .tuku-p-main{
+        font-size: 0.4rem;
+        display: inline-block;
+        font-weight: 600;
+    }
+    /*标签*/
+    .tuku-tab p{
+        font-size: 0.3rem;
+        display: inline-block;
+        border: 1px solid black;
+        padding: 0.1rem 0.3rem;
+        border-radius: 30px;
+        margin: 0.3rem 0.2rem;
+    }
+</style>
+<body>
+<header class="nav-top">
+    <h1>{$data.album_data.name}</h1>
+    <div><p>{$data.album_data.area_name}，{$data.album_data.style_name}</p></div>
+</header>
+<volist name="data.list" id="vo">
+    <div class="tuku-part" style="margin-top: 0">
+        <ul>
+            <li class="tuku-img"><img src="{$vo.img}" alt=""></li>
+            <li class="tuku-tab"><p>{$vo.type_name}</p></li>
+            <li class="tuku-p"><p class="tuku-p-main">{$vo.content}</p></li>
+            <li class="clearfix"></li>
+        </ul>
+    </div>
+</volist>
+
+
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=640){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+
+
+</script>
+</html>

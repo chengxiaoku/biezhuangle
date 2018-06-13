@@ -1,0 +1,46 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Favor_Bar">
+	<div class="item-title">
+		<h3>收藏</h3>
+		<ul class="tab-base">
+			<if condition="Is_Auth('Cms/Favor/index')">
+			<li><a href="{:U('Cms/Favor/index')}"><span>列表</span></a></li>
+			</if>
+			<li><a class="current"href="{:U('Cms/Favor/add')}"><span>新增</span></a></li>
+		</ul>
+	</div>
+</div>
+<form id="Favor_Form" method="post">
+<table class="table tb-type2 nobdb">
+	<tbody>
+			<tr>
+			<td colspan="2" class="required"><label for="for_tid">类型:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="tid" value="1" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips">1：新闻|2：装修日记|3：管家日记|4：装修公司|5：设计师</td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_aid">文章:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="aid" value="" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_uid">用户:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="uid" value="" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_create_time">时间:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="create_time" value="" type="text" class="easyui-datetimebox" style="height:30px;" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>	</tbody>
+	<tfoot>
+		<tr class="tfoot">
+			<td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#Favor_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+		</tr>
+	 </tfoot>
+</table>
+</form></block>

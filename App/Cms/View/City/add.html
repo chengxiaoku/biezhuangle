@@ -1,0 +1,46 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="City_Bar">
+	<div class="item-title">
+		<h3>城市</h3>
+		<ul class="tab-base">
+			<if condition="Is_Auth('Cms/City/index')">
+			<li><a href="{:U('Cms/City/index')}"><span>列表</span></a></li>
+			</if>
+			<li><a class="current"href="{:U('Cms/City/add')}"><span>新增</span></a></li>
+		</ul>
+	</div>
+</div>
+<form id="City_Form" method="post">
+<table class="table tb-type2 nobdb">
+	<tbody>
+			<tr>
+			<td colspan="2" class="required"><label for="for_pid">上级:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><select name="pid" class="easyui-combotree" style="height:30px;" data-options="value:'{:I('get.pid',0)}',url:'{:U("Admin/Function/get_province")}&pid=-1&r_type=json',multiple:false,required:false,editable:false"></select></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_name">名称:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="name" type="text" class="easyui-textbox" style="height:30px;" value="" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_initial">首字母:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><select name="initial" class="easyui-combobox" style="height:30px;" data-options="value:'A',multiple:false,required:false,editable:false"><option value="A" >A</option><option value="B" >B</option><option value="C" >C</option><option value="D" >D</option><option value="E" >E</option><option value="F" >F</option><option value="G" >G</option><option value="H" >H</option><option value="I" >I</option><option value="K" >K</option><option value="L" >L</option><option value="M" >M</option><option value="N" >N</option><option value="O" >O</option><option value="P" >P</option><option value="Q" >Q</option><option value="R" >R</option><option value="S" >S</option><option value="T" >T</option><option value="U" >U</option><option value="V" >V</option><option value="W" >W</option><option value="X" >X</option><option value="Y" >Y</option><option value="Z" >Z</option></select></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_sort">排序:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="sort" value="1" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>	</tbody>
+	<tfoot>
+		<tr class="tfoot">
+			<td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#City_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+		</tr>
+	 </tfoot>
+</table>
+</form></block>

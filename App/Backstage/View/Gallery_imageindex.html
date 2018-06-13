@@ -1,0 +1,119 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+<script src="__JS__/main.js"></script>
+<div class="am-g tpl-g">
+    <!-- 内容区域 -->
+    <div>
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-body  am-fr">
+                            <div class="am-form-group">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button type="button" class="am-btn am-btn-default am-btn-success" onclick="show_add({$id})"><span class="am-icon-plus"></span> 新增</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12">
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                    <thead>
+                                    <tr>
+                                        <th>图片编号</th>
+                                        <th>图片</th>
+                                        <th>图片类型</th>
+                                        <th>图片简述</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="data" id="vo" mod="2">
+
+                                        <tr class="gradeX" >
+                                            <td class="am-text-middle">{$vo.id}</td>
+                                            <td><img src="{$vo.img}" class="tpl-table-line-img" height="65"></td>
+                                            <td class="am-text-middle">
+                                                <switch name="vo.type">
+                                                    <case value="1">客厅</case>
+                                                    <case value="2">卧室</case>
+                                                    <case value="3">餐厅</case>
+                                                    <case value="4">卫生间</case>
+                                                    <default />其他
+                                                </switch>
+                                                </eq>
+                                            </td>
+                                            <td class="am-text-middle">{$vo.content}</td>
+                                            <td class="am-text-middle">
+                                                <div class="tpl-table-black-operation">
+                                                    <!--<a href="javascript:;" onclick="show_edit({$vo.id})">
+                                                        <i class="am-icon-pencil"></i> 编辑
+                                                    </a>-->
+                                                    <a href="javascript:;" class="tpl-table-black-operation-del" onclick="del({$vo.id})">
+                                                        <i class="am-icon-trash"></i> 删除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        {$page}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Public/Store/html/footer.html" />
+<script>
+    function show_add(id){
+
+        layer.open({
+            type: 2,
+            title: '图片添加',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['650px', '90%'],
+            content: "{:U('imageadd')}&id="+id,
+            maxmin: true
+        });
+    }
+    function show_edit(id){
+        layer.open({
+            type: 2,
+            title: '编辑',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['650px', '750px'],
+            content: "{:U('edit')}&id="+id,
+            maxmin: true
+        });
+    }
+    function del(id){
+        layer.confirm('您确定删除该条信息？',function(){
+            $.post("{:U('imagedel')}",{id:id},function(data){
+                if (data['success']) {
+                    layer.alert(data['info'],function(){
+                        layer.close(layer.index);
+                        $("#example-r").load(location.href+" #example-r");
+                    });
+                }else{
+                    layer.msg(data['info'], {icon: 5 });
+                }
+            });
+
+        });
+    }
+</script>
+</body>
+
+</html>

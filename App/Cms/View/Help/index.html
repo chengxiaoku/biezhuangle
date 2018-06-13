@@ -1,0 +1,71 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Help_Bar">
+    <div class="item-title">
+        <h3>帮助中心</h3>
+        <ul class="tab-base">
+            <li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('Help_Data_List');"><span>列表</span></a></li>
+            <li><a href="JavaScript:void(0);" onclick="Data_Search('Help_Search_From','Help_Data_List');"><span>搜索</span></a></li>
+            <if condition="Is_Auth('Cms/Help/add')">
+                <li><a href="{:U('Cms/Help/add')}"><span>新增</span></a></li>
+            </if>
+        </ul>
+    </div>
+</div>
+    <div style="display: none">
+        <form id="Help_Search_From" class="search_from">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tr>
+                    <th>标题 : </th>
+                    <td><input name="s_user_id" type="text" class="easyui-textbox" style="height:30px;"></td>
+                </tr>
+                <tr>
+                    <th>排序 : </th>
+                    <td><input name="s_phone" type="text" class="easyui-textbox" style="height:30px;"></td>
+                </tr>
+                <tr>
+                <th>内容 : </th>
+                <td><input name="s_content" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr><tr>
+                <th>创建时间 : </th>
+                <td><input name="s_create_time_min" type="text" class="easyui-datetimebox" style="height:30px;"> - <input name="s_create_time_max" type="text" class="easyui-datetimebox" style="height:30px;"></td>
+            </tr>    </table>
+        </form>
+    </div>
+
+    <table id="Help_Data_List"></table>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#Help_Data_List").datagrid({
+                url : "{:U('Help/index')}",
+                fit : true,
+                striped : true,
+                border : false,
+                pagination : true,
+                pageSize : 20,
+                pageList : [ 10, 20, 50 ],
+                pageNumber : 1,
+                sortName : 'id',
+                sortOrder : 'desc',
+                toolbar : '#Help_Bar',
+                singleSelect : true,
+                columns : [[
+                    {field : 'id',title : 'ID',width : 40,sortable:true},
+                    {field : "title",title : "标题",width :100,sortable:true},{field : "content",title : "内容",width :100,sortable:true},{field : "create_time",title : "创建时间",width :100,sortable:true,formatter: function (value, row, index) {
+                        return u_to_ymdhis(value)
+                    }},			{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+                        operate_menu='';
+
+                        <if condition="Is_Auth('Cms/Help/edit')">
+                        operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+                        </if>
+
+                        <if condition="Is_Auth('Cms/Help/del')">
+                        operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','Help_Data_List');\">删除</a>";
+                        </if>
+
+                        return operate_menu;
+                    }}
+                ]]
+            });
+        })
+    </script></block>

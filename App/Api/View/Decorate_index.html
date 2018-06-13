@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>装修日记</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/fenxiang-biezhuangle.css">
+    <link rel="stylesheet" href="__CSS__/liu.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/TouchSlide.js"></script>
+    <script src="__JS__/jquery.flexslider-min.js"></script>
+    <script src="__JS__/swiper.jquery.min.js"></script>
+</head>
+<body style="background-color: #ffffff;">
+<header class="zxrj-header navbar-fixed-top" style="text-align: center;z-index: 0;">
+    <p style="display: inline-block;">装修日记</p>
+    <div class="clearfix"></div>
+</header>
+<div style="height: 0.83rem;"></div>
+
+    <!--<div class="swiper-slide-zjgd">
+        <a href="{:U('Decoarate/index')}">
+            <ul class="swiper-slide-zjgd-left">
+                <li class="swiper-slide-zjgd-img"><img src="__IMG__/zxgs-index-banner-b.png" alt=""></li>
+                <li class="swiper-slide-zjgd-title"><p class="swiper-slide-zjgd-title-1">李先生</p><p class="swiper-slide-zjgd-title-2">198平方混搭四居</p></li>
+                <div class="clearfix"></div>
+                <li class="swiper-slide-zjgd-type"><img src="__IMG__/zxgs-index-banner-1.png" alt="" class="swiper-slide-zjgd-type-img-1"><p>96</p><p>m²</p><img src="images/zxgs-index-banner-2.png" alt="" class="swiper-slide-zjgd-type-img-2"><p>四</p><p>室</p><p>两</p><p>厅</p></li>
+            </ul>
+        </a>
+        <ul class="swiper-slide-zjgd-right">
+            <li class="swiper-slide-zjgd-img"><img src="__IMG__/zxgs-index-banner-c.png" alt=""></li>
+            <li class="swiper-slide-zjgd-title"><p class="swiper-slide-zjgd-title-1">李先生</p><p class="swiper-slide-zjgd-title-2">198平方混搭四居</p></li>
+            <div class="clearfix"></div>
+            <li class="swiper-slide-zjgd-type"><img src="__IMG__/zxgs-index-banner-1.png" alt="" class="swiper-slide-zjgd-type-img-1"><p>96</p><p>m²</p><img src="images/zxgs-index-banner-2.png" alt="" class="swiper-slide-zjgd-type-img-2"><p>四</p><p>室</p><p>两</p><p>厅</p></li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+
+<div class="swiper-slide-zjgd">
+    <ul class="swiper-slide-zjgd-left">
+        <li class="swiper-slide-zjgd-img"><img src="__IMG__/zxgs-index-banner-b.png" alt=""></li>
+        <li class="swiper-slide-zjgd-title"><p class="swiper-slide-zjgd-title-1">李先生</p><p class="swiper-slide-zjgd-title-2">198平方混搭四居</p></li>
+        <div class="clearfix"></div>
+        <li class="swiper-slide-zjgd-type"><img src="__IMG__/zxgs-index-banner-1.png" alt="" class="swiper-slide-zjgd-type-img-1"><p>96</p><p>m²</p><img src="images/zxgs-index-banner-2.png" alt="" class="swiper-slide-zjgd-type-img-2"><p>四</p><p>室</p><p>两</p><p>厅</p></li>
+    </ul>
+    <ul class="swiper-slide-zjgd-right">
+        <li class="swiper-slide-zjgd-img"><img src="__IMG__/zxgs-index-banner-c.png" alt=""></li>
+        <li class="swiper-slide-zjgd-title"><p class="swiper-slide-zjgd-title-1">李先生</p><p class="swiper-slide-zjgd-title-2">198平方混搭四居</p></li>
+        <div class="clearfix"></div>
+        <li class="swiper-slide-zjgd-type"><img src="__IMG__/zxgs-index-banner-1.png" alt="" class="swiper-slide-zjgd-type-img-1"><p>96</p><p>m²</p><img src="images/zxgs-index-banner-2.png" alt="" class="swiper-slide-zjgd-type-img-2"><p>四</p><p>室</p><p>两</p><p>厅</p></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>-->
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=640){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+
+</script>
+</html>

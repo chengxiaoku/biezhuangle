@@ -1,0 +1,23 @@
+<div class="col-l col-l3">
+    <div class="all-fl">
+        <h2>全部分类</h2>
+        <div class="fg-box fg-box-item">
+            <volist name="catnav_list" id="vo">
+                <eq name="vo.is_auth" value="1">
+                    <if condition="IS_WebAuth($vo['name'])"><a class="on" href="/{$vo['name']}/mid/{:I('get.mid')}"><h4>{$vo.title}</h4></a></if>
+                    <else/>
+                    <a class="on" href="/{$vo['name']}/mid/{:I('get.mid')}"><h4>{$vo.title}</h4></a>
+                </eq>
+            </volist>
+        </div>
+        <!-- <div class="fg-box fg-box-item">
+            <h4><a class="on" href="{:U('Hdjl/zxdy')}">在线答疑</a></h4>
+            <h4><a class="on" href="{:U('Hdjl/zswdlist')}">知识问答</a></h4>
+            <h4><a class="on" href="{:U('Hdjl/jyjllist')}">经验交流</a></h4>
+            <h4><a class="on" href="{:U('Notice/index')}">紧急通知</a></h4>
+            <if condition="IS_WebAuth('Home/Hdjl/zxdylist')">
+            <h4><a class="on" href="{:U('Hdjl/zxdylist')}">在线解答</a></h4>
+    		</if>
+        </div> -->
+    </div>
+</div>

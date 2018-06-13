@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>管家日记</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/fenxiang-biezhuangle.css">
+    <link rel="stylesheet" href="__CSS__/liu.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/TouchSlide.js"></script>
+    <script src="__JS__/jquery.flexslider-min.js"></script>
+    <script src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__JS__/radialIndicator.js"></script>
+</head>
+<body style="background-color: #ffffff;">
+<header class="zxgs-header navbar-fixed-top" style="text-align: center;border-bottom: none;">
+   <!-- <a href="#" onClick="javascript :history.back(-1);"><img src="__IMG__/back-arrow-black.png" alt=""></a>-->
+    <p style="display: inline-block;"><!--王女士乔迁之居-->管家日记</p>
+    <!--<div class="zxgs-header-fenxiang"><img src="__IMG__/header-fenxiang.png" alt=""></div>-->
+    <!--<div class="zxgs-header-shoucang"><img src="__IMG__/shoucang.png" alt=""></div>-->
+    <div class="clearfix"></div>
+</header>
+<div style="height: 0.83rem;"></div>
+<div class="zxgj-gjrj-banner" style="height: 18%;"><img src="{$info.list_time.coverimg}" alt="" style="height: 100%;"></div>
+<div class="zxgj-gjrj-gl-title"><img src="__IMG__/users.png" alt=""><p>项目管理团队</p></div>
+<div class="zxgj-swiper">
+    <div class="swiper-container swiper-container-zxgj">
+        <div class="swiper-wrapper">
+            <volist name="info.list_butler" id="vo">
+                <div class="swiper-slide swiper-slide-zxgj"><a href="zxgj-G1.html"><p class="zxgj-index-jinpai">{$vo.level_name}</p><div><img src="{$vo.photo}" alt="头像"></div><p class="zxgj-girj-name">{$vo.name}</p></a></div>
+            </volist>
+           </div>
+        <!--<div class="swiper-pagination swiper-pagination-zxgj"></div>-->
+        <div style="height: 0.2rem;"></div>
+    </div>
+</div>
+<div style="height: 0.15rem;background-color: #ebebeb;"></div>
+<div class="zxgj-gjrj-gl-title"><img src="__IMG__/notepad.png" alt=""><p>项目概括</p></div>
+<div class="zxgj-gjrj-plan">
+    <ul>
+        <li><p>开工时间：</p><p>{$info.list_time.start_date|date='Y-m-d',###}</p></li>
+        <li><p>计划竣工：</p><p>{$info.list_time.end_date|date='Y-m-d',###}</p></li>
+        <li><p>计划天数：</p><p>{$gq}天</p></li>
+        <li><p>实际施工：</p><p>{$info.sjts}</p><p>天</p></li>
+        <li><p>停工天数：</p><p>{$info.downtime}</p><p>天</p></li>
+    </ul>
+</div>
+<div style="height: 0.15rem;background-color: #ebebeb;"></div>
+
+<div class="zxgj-gjrj-biao-message">
+    <p class="zxgj-gjrj-biao-message-color" style="background-color: #55c45f;"></p>
+    <p class="zxgj-gjrj-biao-message-p">实际施工</p>
+    <p class="zxgj-gjrj-biao-message-color" style="background-color: #ff6b6b;margin-left: 0.5rem;"></p>
+    <p class="zxgj-gjrj-biao-message-p">实际停工</p>
+</div>
+<div style="height: 0.15rem;background-color: #ebebeb;"></div>
+<div class="zxgj-gjrj-sgjd-title">施工阶段明细</div>
+<div class="zxgj-gjrj-sgjd-list">
+    <div class="zxgj-gjrj-sgjd-left">
+        <volist name="info.list" id="vo">
+                <li class="zxgj-gjrj-sgjd-left-title">list</li>
+                <li class="zxgj-gjrj-sgjd-left-content">{$key+1}</li>
+                <if condition="$key+1 neq count($info['list'])">
+                    <li class="zxgj-gjrj-sgjd-left-line"></li>
+                </if>
+
+            </ul>
+        </volist>
+
+    </div>
+    <div class="zxgj-gjrj-sgjd-right">
+        <volist name="info.list" id="vo">
+            <a href="{:U('Butler/rj_jd',array('share'=>'clf','butlerid'=>$order_id,'jdid'=>$vo['node_id']))}">
+                <ul>
+                    <li class="zxgj-gjrj-sgjd-right-title">{$vo.name}</li>
+                    <li class="zxgj-gjrj-sgjd-right-time"><p>完成时间：</p><p>{$vo.end_time}</p><img src="__IMG__/next-arrow-black.png" alt=""><div class="clearfix"></div></li>
+                    <li class="zxgj-gjrj-sgjd-right-tab">
+
+                        <div>
+                            <switch name="vo.status_no">
+                                <case value="4"><p class="sgjd-right-tab-1">已完工</p></case>
+                                <case value="2"><p class="sgjd-right-tab-2">施工中</p></case>
+                                <case value="3"><p class="sgjd-right-tab-3">等待验收</p></case>
+                                <default />
+                            </switch>
+                        </div>
+                    </li>
+                </ul>
+            </a>
+        </volist>
+
+    </div>
+    <div class="clearfix"></div>
+</div>
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=640){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+    var swiper = new Swiper('.swiper-container-zxgj', {
+//        pagination: '.swiper-pagination-zxgj',
+        slidesPerView: 4,
+        paginationClickable: true,
+        spaceBetween: 30,
+        freeMode: true
+    });
+    //    window.onload=function(){
+    //        $(".sgjd-right-tab-1").removeClass("sgjd-right-tab-none");
+    //    }
+</script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>下载客户端</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/fenxiang-biezhuangle.css">
+    <link rel="stylesheet" href="__CSS__/liu.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/TouchSlide.js"></script>
+    <script src="__JS__/jquery.flexslider-min.js"></script>
+</head>
+<body style="background-image: url('__IMG__/download-bg.png');background-size: cover">
+<header class="help-header navbar-fixed-top">
+    <a href="#" onClick="javascript :history.back(-1);"><img src="__IMG__/help-back-arrow.png" alt=""></a>
+    <p class="text-center">下载客户端</p>
+</header>
+<div style="height: 0.9rem;"></div>
+<div style="height: 1rem;"></div>
+<div class="down-load-title-1">别装了</div>
+<div style="height: 0.4rem;"></div>
+<div class="down-load-title-2">为家装互联网而生</div>
+<div style="height: 0.5rem;"></div>
+<div class="down-load-btn"><a href="https://www.pgyer.com/biezhuangle"><img src="__IMG__/android.png" alt="" class="down-load-btn-1"></a><a href="https://itunes.apple.com/cn/app/%E5%88%AB%E8%A3%85%E4%BA%86-%E8%AE%A9%E8%A3%85%E4%BF%AE%E5%8F%98%E5%BE%97%E7%AE%80%E5%8D%95/id1244968828?mt=8"><img src="__IMG__/ios.png" alt="" class="down-load-btn-2"></a></div>
+<div style="height: 0.1rem;"></div>
+<div class="down-load-title-3">点击图标下载APP</div>
+<div style="height: 0.5rem;"></div>
+<div class="down-load-next"><a href="#">继续浏览网页</a></div>
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=640){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
+</html>

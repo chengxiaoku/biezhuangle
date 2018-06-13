@@ -1,0 +1,73 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Notice_Bar">
+	<div class="item-title">
+		<h3>通知公告</h3>
+		<ul class="tab-base">
+			<li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('Notice_Data_List');"><span>列表</span></a></li>
+			<li><a href="JavaScript:void(0);" onclick="Data_Search('Notice_Search_From','Notice_Data_List');"><span>搜索</span></a></li>
+			<if condition="Is_Auth('Cms/Notice/add')">
+			<li><a href="{:U('Cms/Notice/add')}"><span>新增</span></a></li>
+			</if>
+		</ul>
+	</div>
+</div>
+<div style="display: none">
+  <form id="Notice_Search_From" class="search_from">
+	<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+			<th>标题 : </th>
+			<td><input name="s_title" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>创建时间 : </th>
+			<td><input name="s_create_time_min" type="text" class="easyui-datetimebox" style="height:30px;"> - <input name="s_create_time_max" type="text" class="easyui-datetimebox" style="height:30px;"></td>
+		</tr><tr>
+			<th>类型 : </th>
+			<td><select name="s_type" class="easyui-combobox" style="height:30px;" data-options="value:'',multiple:false,required:false,editable:false"><option value="" >请选择一个选项</option><option value="1" >普通</option><option value="2" >弹框</option></select></td>
+		</tr>    </table>
+  </form>
+</div>
+
+<table id="Notice_Data_List"></table>
+
+<script type="text/javascript">
+$(function() {
+	$("#Notice_Data_List").datagrid({
+		url : "{:U('Notice/index')}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [ 10, 20, 50 ],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc',
+		toolbar : '#Notice_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40,sortable:true},
+{field : "title",title : "标题",width :200,sortable:true},{field : "create_time",title : "创建时间",width :200,sortable:true,formatter: function (value, row, index) {
+			return u_to_ymdhis(value)
+		}},{field : "type",title : "类型",width :200,sortable:true,formatter: function (value, row, index) {
+			var op_type=new Array()
+			op_type["1"]="普通"
+			op_type["2"]="弹框"
+			
+			return op_type[value];
+			}},
+						{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+				operate_menu='';
+				
+				<if condition="Is_Auth('Cms/Notice/edit')">
+				operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+				</if>
+
+				<if condition="Is_Auth('Cms/Notice/del')">
+				operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','Notice_Data_List');\">删除</a>";
+				</if>
+
+				return operate_menu;
+			}}
+		]]
+	});
+})
+</script></block>

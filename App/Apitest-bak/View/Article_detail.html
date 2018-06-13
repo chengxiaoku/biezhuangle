@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="referrer" content="never">
+    <title>新闻</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/fenxiang-biezhuangle.css">
+    <link rel="stylesheet" href="__CSS__/liu.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/TouchSlide.js"></script>
+    <script src="__JS__/jquery.flexslider-min.js"></script>
+    <script src="__JS__/swiper.jquery.min.js"></script>
+    <style>
+        .news-part-content-p{
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="news-part-title">
+    <h1 class="news-part-title-title">{$info.info.title}</h1>
+    <p class="news-part-title-type">{$info.info.catname}</p>
+
+    <p class="news-part-title-time">{$info.info.create_time|date="Y-m-d H:i:s",###}</p>
+</div>
+<div class="news-part-content" id="imgs">
+    {$text}
+</div>
+<div class="news-part-top-down">
+    <div class="news-part-top"><a href="#"><img src="__IMG__/news-top.png" alt=""></a><p>{$info.agree.agree1}</p><p>人赞</p></div>
+    <div class="news-part-down"><a href="#"><img src="__IMG__/news-down.png" alt=""></a><p>{$info.agree.agree2}</p><p>人踩</p></div>
+</div>
+<!--<div class="news-index-list-title">-->
+    <!--<p>相关推荐</p>-->
+<!--</div>-->
+<!--<div class="news-index-list">-->
+    <!--<div class="news-index-part" >-->
+        <!--<volist name="info.recommend" id="vo">-->
+            <!--<ul class="news-index-news">-->
+                <!--<li class="index-news-content"><a href="#"><h1 class="index-news-title">{$vo.title}</h1></a><p class="index-news-type">{$vo.catname}</p>&lt;!&ndash;<p class="index-news-width">63评</p>&ndash;&gt;<p class="index-news-time">{$vo.create_time|date="Y-m-d H:i:s",###}</p></li>-->
+                <!--<li class="index-news-img"><a href="#"><img src="{$vo.image}" alt=""></a></li>-->
+                <!--<li class="clearfix"></li>-->
+            <!--</ul>-->
+        <!--</volist>-->
+
+    <!--</div>-->
+<!--</div>-->
+<div class="news-footer-fenxiang-list navbar-fixed-bottom" style="display: none; z-index: 10000;">
+    <ul>
+        <li class="news-footer-fenxiang-part">
+            <h1>分享到</h1>
+            <div>
+                <img src="__IMG__/fenxiang-weixin.png" alt=""><p>微信</p>
+            </div>
+            <div>
+                <img src="__IMG__/fenxiang-pengyouquan.png" alt=""><p>微信朋友圈</p>
+            </div>
+            <div>
+                <img src="__IMG__/fenxiang-QQ.png" alt=""><p>手机QQ</p>
+            </div>
+            <div>
+                <img src="__IMG__/fenxiang-sina-weibo.png" alt=""><p>新浪微博</p>
+            </div>
+            <div>
+                <img src="__IMG__/fenxiang-tx-weibo.png" alt=""><p>腾讯微博</p>
+            </div>
+            <div>
+                <img src="__IMG__/fenxiang-kongjian.png" alt=""><p>QQ空间</p>
+            </div>
+        </li>
+        <li class="news-footer-shoucang-part">
+            <div>
+                <img src="__IMG__/fenxiang-shoucang.png" alt=""><p>收藏</p>
+            </div>
+            <div>
+                <img src="__IMG__/fenxiang-jubao.png" alt=""><p>举报</p>
+            </div>
+        </li>
+        <li class="news-footer-title-part">
+            <h1 class="news-footer-title-part-btn" style="display: inline-block;">取消</h1>
+        </li>
+    </ul>
+</div>
+<div style="display: none;" id="cover"></div>
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=640){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+
+
+    //    $(document).ready(function(){
+    //        $(".news-index-list").unbind("scroll").bind("scroll", function(e){
+    //            var sum = this.scrollHeight;
+    //            if (sum <= $(this).scrollTop() + $(this).height()) {
+    //                $(".news-index-list").append($(".news-index-part").clone());
+    //            }
+    //        });
+    //    });
+
+    $(".news-footer-fenxiang").click(function(){
+        $(".news-part-footer").hide();
+        $("#cover").show();
+        $("body").css("overflow","hidden");
+        $(".news-footer-fenxiang-list").show();
+    });
+    $(".news-footer-title-part-btn").click(function(){
+        $(".news-footer-fenxiang-list").hide();
+        $("#cover").hide();
+        $("body").css("overflow","");
+        $(".news-part-footer").show();
+    });
+
+    $("#imgs img").each(function () {
+        var img = $(this);
+        var img_src = img.attr("src");
+
+        img.attr("src",'http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl='+img_src);
+    });
+</script>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理控制台 | {:C('SOFT_NAME')}</title>
+<link rel="stylesheet" type="text/css" href="__STATIC__/Easyui/themes/default/easyui.css">
+<link rel="stylesheet" href="__STATIC__/Font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/Easyui/themes/color.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/main.css">
+<script type="text/javascript" src="__STATIC__/Jquery/jquery.min.js"></script>
+
+<script type="text/javascript" src="__STATIC__/Easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__STATIC__/Easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="__JS__/main.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            // var easyuiTheme = "default";
+            // var cookieTheme = "ui-cupertino";//这里呢 我们可以将想要更换的主题名称存到cookie中，每次加载时JS操作读取下，这样就可以达到个性化更换主题的目的了，这里我就不详细阐述了
+            // var href = $("#easyuiTheme").attr("href").replace(easyuiTheme, cookieTheme);
+            // $("#easyuiTheme").attr("href", href);
+        });
+    </script>
+</head>
+<body class="easyui-layout" id="Main_Layout_Box">
+<div id="Main_Layout_North" data-options="region:'north',split:false">
+  <div id="header_logo"> <a href="{:U('Admin/Index/index')}">{:C('SOFT_NAME')}</a> <i class="opacity-80">v{:C('SOFT_VERSION')}</i> <a class="justify" href="javascript:void(0);"></a></div>
+  <ul id="header_nav" class="header_nav">
+    <volist name="AdminMenu" id="v"><a href="JavaScript:void(0);" id="nav_{$v['id']}"><li>{$v['title']}</li></a></volist>
+  </ul>
+  <ul class="header_nav" style="float:right">
+    <a href="JavaScript:void(0);" onclick="UpdateTabs('Admin/User/updatenickname','用户资料','{:U('User/updatenickname')}','iconfont icon-user')"><li>{$UserInfo['nickname']}[{$UserInfo['username']}]</li></a>
+    <a href="JavaScript:void(0);" onclick="UpdateTabs('Admin/Config/group','缓存更新','{:U('Index/cache')}','iconfont icon-shezhi')"><li>缓存更新</li></a>
+    <a href="{:U('Public/logout')}"><li>退出</li></a>
+  </ul>
+</div>
+<div id="Main_Layout_South" data-options="region:'south',split:false">Powered by <a href="{:C('SOFT_SITE')}" style="color:#666">{:C('SOFT_NAME')} v {:C('SOFT_VERSION')}</a> | Copyright © <a href="{:C('SOFT_AUTHOR_SITE')}" style="color:#666">xinmu</a> All rights reserved.</div>
+<div id="Main_Layout_West" data-options="region:'west',split:false,cls:'Main_Layout_West_box'">
+<volist name="AdminMenu" id="v">
+    <div id="nav_{$v['id']}_box" class="nav_box">
+        <div class="right_box">
+          <volist id="vo" name="v['children']">
+            <dl id="right_{$vo['id']}_box_menu">
+              <dd>
+                <ul>
+                  <volist id="vo2" name="vo['children']">
+                  <a href="JavaScript:void(0);" onclick="UpdateTabs('{$vo2['name']}','{$vo2['title']}','{$vo2['url']}','{$vo2['icon']}')"><li><i class="icon iconfont {$vo2['icon']}"></i>{$vo2['title']}</li></a>
+                  </volist>
+                </ul>
+              </dd>
+            </dl>
+          </volist>
+        </div>
+        <ul class="left_box">
+            <volist id="vo" name="v['children']">
+            <a href="JavaScript:void(0);" id="left_{$vo['id']}_nav_menu" class="left_nav" onclick="LeftMenu('{$vo['id']}')"><li><i class="icon iconfont {$vo['icon']}"></i><div>{$vo['title']}</div></li></a>
+            </volist>
+        </ul>
+    </div>
+</volist>
+</div>
+<div id="Main_Layout_Center" data-options="region:'center',split:false" style="padding:5px;">
+    <div id="MainTabs" class="easyui-tabs" data-options="fit:true,border:false">
+        <div title="控制台" data-options="closable:false,id:-1,iconCls:'iconfont icon-all',bodyCls:'tabs_box'" id="tabs_Index" style="padding: 5px;">
+            <iframe scrolling="yes" frameborder="0"  src="{:U('Admin/Index/main')}" style="width:100%;height:100%;"></iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<include file="./Public/Backstage/html/head.html" />
+<body data-type="index">
+<div class="am-g tpl-g">
+    <include file="./Public/Backstage/html/header.html" />
+    <include file="./Public/Backstage/html/sidebar.html" />
+    <!-- 内容区域 -->
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">用户({$username})资金流水明细</div>
+
+                        </div>
+
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12">
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="">
+                                    <thead>
+                                    <tr>
+                                        <th>流水单号</th>
+                                        <th>金额</th>
+                                        <th>流水类型</th>
+                                        <th>操作时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="list" id="vo" mod="2">
+
+                                        <tr class="gradeX">
+                                            <td>{$vo.trade_no}</td>
+                                            <td>{$vo.trade_amount}</td>
+                                            <td>
+                                                <if condition="$vo['type'] eq 1">
+                                                    支付
+                                                    <else/>
+                                                    充值
+                                                </if>
+                                            </td>
+                                            <td>{$vo.timestamp}</td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        {$page}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Public/Backstage/html/footer.html" />
+</body>
+<script type="text/javascript">
+
+</script>
+</html>

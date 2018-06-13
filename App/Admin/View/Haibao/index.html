@@ -1,0 +1,75 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Haibao_Bar">
+	<div class="item-title">
+		<h3>海报</h3>
+		<ul class="tab-base">
+			<li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('Haibao_Data_List');"><span>列表</span></a></li>
+			<li><a href="JavaScript:void(0);" onclick="Data_Search('Haibao_Search_From','Haibao_Data_List');"><span>搜索</span></a></li>
+			<if condition="Is_Auth('Admin/Haibao/add')">
+			<li><a href="{:U('Admin/Haibao/add')}"><span>新增</span></a></li>
+			</if>
+		</ul>
+	</div>
+</div>
+<div style="display: none">
+  <form id="Haibao_Search_From" class="search_from">
+	<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+			<th>姓名 : </th>
+			<td><input name="s_name" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>区域 : </th>
+			<td><input name="s_address" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>他人 : </th>
+			<td><input name="s_taren" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>情话 : </th>
+			<td><input name="s_qinghua" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>图片 : </th>
+			<td><input name="s_img" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr>    </table>
+  </form>
+</div>
+
+<table id="Haibao_Data_List"></table>
+
+<script type="text/javascript">
+$(function() {
+	$("#Haibao_Data_List").datagrid({
+		url : "{:U('Haibao/index')}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [ 10, 20, 50 ],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc',
+		toolbar : '#Haibao_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40,sortable:true},
+{field : "name",title : "姓名",width :100,sortable:true},{field : "address",title : "区域",width :100,sortable:true},{field : "taren",title : "他人",width :100,sortable:true},{field : "qinghua",title : "情话",width :100,sortable:true},
+{field : "img",title : "图片",width :100,sortable:true,formatter: function (value, row, index) {
+				var img = '<img width="50px" height="50px" src="'+value+'"/>';
+				return img;
+		}},			
+{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+				operate_menu='';
+				
+				<if condition="Is_Auth('Admin/Haibao/edit')">
+				operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+				</if>
+
+				<if condition="Is_Auth('Admin/Haibao/del')">
+				operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','Haibao_Data_List');\">删除</a>";
+				</if>
+
+				return operate_menu;
+			}}
+		]]
+	});
+})
+</script></block>

@@ -1,0 +1,103 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Decorate_Bar">
+	<div class="item-title">
+		<h3>装修订单</h3>
+		<ul class="tab-base">
+			<li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('Decorate_Data_List');"><span>列表</span></a></li>
+			<li><a href="JavaScript:void(0);" onclick="Data_Search('Decorate_Search_From','Decorate_Data_List');"><span>搜索</span></a></li>
+			<if condition="Is_Auth('Cms/Decorate/add')">
+			<li><a href="{:U('Cms/Decorate/add')}"><span>新增</span></a></li>
+			</if>
+		</ul>
+	</div>
+</div>
+<div style="display: none">
+  <form id="Decorate_Search_From" class="search_from">
+	<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+			<th>城市 : </th>
+			<td><input name="s_city_id" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>面积 : </th>
+			<td><input name="s_area" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>室 : </th>
+			<td><input name="s_room" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>厅 : </th>
+			<td><input name="s_hall" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>厨 : </th>
+			<td><input name="s_cook" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>卫 : </th>
+			<td><input name="s_toilet" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>阳台 : </th>
+			<td><input name="s_balcony" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>申请时间 : </th>
+			<td><input name="s_create_time_min" type="text" class="easyui-datetimebox" style="height:30px;"> - <input name="s_create_time_max" type="text" class="easyui-datetimebox" style="height:30px;"></td>
+		</tr><tr>
+			<th>总价 : </th>
+			<td><input name="s_total_price" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>方案标题 : </th>
+			<td><input name="s_title" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>方案说明 : </th>
+			<td><input name="s_explain" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr><tr>
+			<th>状态 : </th>
+			<td><select name="s_status" class="easyui-combobox" style="height:30px;" data-options="value:'',multiple:false,required:false,editable:false"><option value="" >请选择一个选项</option><option value="0" >默认</option><option value="1" >生成方案</option></select></td>
+		</tr><tr>
+			<th>详细地址 : </th>
+			<td><input name="s_address" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr>    </table>
+  </form>
+</div>
+
+<table id="Decorate_Data_List"></table>
+
+<script type="text/javascript">
+$(function() {
+	$("#Decorate_Data_List").datagrid({
+		url : "{:U('Decorate/index')}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [ 10, 20, 50 ],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc',
+		toolbar : '#Decorate_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40,sortable:true},
+{field : "city_id",title : "城市",width :200,sortable:true},{field : "area",title : "面积",width :200,sortable:true},{field : "room",title : "室",width :200,sortable:true},{field : "hall",title : "厅",width :200,sortable:true},{field : "cook",title : "厨",width :200,sortable:true},{field : "toilet",title : "卫",width :200,sortable:true},{field : "balcony",title : "阳台",width :200,sortable:true},{field : "create_time",title : "申请时间",width :200,sortable:true,formatter: function (value, row, index) {
+			return u_to_ymdhis(value)
+		}},{field : "total_price",title : "总价",width :200,sortable:true},{field : "title",title : "方案标题",width :200,sortable:true},{field : "explain",title : "方案说明",width :200,sortable:true},{field : "status",title : "状态",width :200,sortable:true,formatter: function (value, row, index) {
+			var op_status=new Array()
+			op_status["0"]="默认"
+			op_status["1"]="生成方案"
+			
+			return op_status[value];
+			}},
+			{field : "address",title : "详细地址",width :200,sortable:true},			{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+				operate_menu='';
+				
+				<if condition="Is_Auth('Cms/Decorate/edit')">
+				operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+				</if>
+
+				<if condition="Is_Auth('Cms/Decorate/del')">
+				operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','Decorate_Data_List');\">删除</a>";
+				</if>
+
+				return operate_menu;
+			}}
+		]]
+	});
+})
+</script></block>

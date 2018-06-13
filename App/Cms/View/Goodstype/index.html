@@ -1,0 +1,72 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Goodstype_Bar">
+	<div class="item-title">
+		<h3>商品类型</h3>
+		<ul class="tab-base">
+			<li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('Goodstype_Data_List');"><span>列表</span></a></li>
+			<li><a href="JavaScript:void(0);" onclick="Data_Search('Goodstype_Search_From','Goodstype_Data_List');"><span>搜索</span></a></li>
+			<if condition="Is_Auth('Cms/Goodstype/add')">
+			<li><a href="{:U('Cms/Goodstype/add')}"><span>新增</span></a></li>
+			</if>
+		</ul>
+	</div>
+</div>
+<div style="display: none">
+  <form id="Goodstype_Search_From" class="search_from">
+	<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+			<th>房间 : </th>
+			<td><select name="s_room_id" class="easyui-combobox" style="height:30px;" data-options="value:'',url:'{:U("Admin/Function/get_room_all")}&r_type=json',valueField:'id',textField:'text',multiple:false,required:false,editable:false"></select></td>
+		</tr><tr>
+			<th>商品类型 : </th>
+			<td><select name="s_catid[]" class="easyui-combobox" style="height:30px;" data-options="value:'',url:'{:U("Admin/Function/get_category_goods")}&r_type=json',valueField:'id',textField:'text',multiple:true,cascadeCheck:false,required:false,editable:false"></select></td>
+		</tr>    </table>
+  </form>
+</div>
+
+<table id="Goodstype_Data_List"></table>
+<script charset="utf-8" src="{:U('Admin/Function/get_room_all',array('r_type'=>'json_list'))}"></script>
+<script charset="utf-8" src="{:U('Admin/Function/get_category_goods',array('r_type'=>'json_list'))}"></script>
+<script type="text/javascript">
+$(function() {
+	$("#Goodstype_Data_List").datagrid({
+		url : "{:U('Goodstype/index')}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [ 10, 20, 50 ],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc', 
+		toolbar : '#Goodstype_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40,sortable:true},
+			{field : "room_id",title : "房间",width :100,formatter: function (value, row, index) {return op_room_id[value];}},
+			{field : "catid",title : "分类",width :300,formatter: function (value, row, index) {
+				var data = [];
+				var catid_arr = value.split(',');
+				for (var v in catid_arr) {
+					data.push(op_catid[catid_arr[v]]);
+				}
+				return data.join('|');
+				}
+			},
+			{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+				operate_menu='';
+
+				<if condition="Is_Auth('Cms/Goodstype/edit')">
+				operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+				</if>
+
+				<if condition="Is_Auth('Cms/Goodstype/del')">
+				operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','Goodstype_Data_List');\">删除</a>";
+				</if>
+
+				return operate_menu;
+			}}
+		]]
+	});
+})
+</script></block>

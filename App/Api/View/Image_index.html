@@ -1,0 +1,15 @@
+<script type="text/javascript">
+    function showImg(url) {
+                     var frameid = 'frameimg' + Math.random();
+                     window.img = '<img id="img" src=\'' + url + '?' + Math.random() + '\' /><script>window.onload = function() { parent.document.getElementById(\'' + frameid + '\').height = document.getElementById(\'img\').height+\'px\'; }<' + '/script>';
+                     document.write('<iframe id="' + frameid + '" src="javascript:parent.img;" frameBorder="0" scrolling="no" width="100%"></iframe>');
+                 }
+         </script>
+     <h1>直接盗链：</h1>
+     <br>
+     <img src="http://mmbiz.qpic.cn/mmbiz/CCWic1qUpoDicJtRKSFtaRlb6DVw4r9HecDpfgQQr1n6U7eDMWic748VicrhmEFoVv3aRyvBCgpxp5gxDqhDatGjiag/640?tp=webp&wxfrom=5&wx_lazy=1" /><br>
+     <h1>js破解盗链：</h1>
+     <br>
+     <div id="hotlinking">
+             <script type="text/javascript">showImg('http://mmbiz.qpic.cn/mmbiz/CCWic1qUpoDicJtRKSFtaRlb6DVw4r9HecDpfgQQr1n6U7eDMWic748VicrhmEFoVv3aRyvBCgpxp5gxDqhDatGjiag/640?tp=webp&wxfrom=5&wx_lazy=1');</script>
+        </div>

@@ -1,0 +1,157 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+    <script src="__JS__/main.js"></script>
+    <div class="am-g tpl-g">
+        <script src="__JS__/theme.js"></script>
+        <script src="http://jq22.qiniudn.com/masonry-docs.min.js"></script>
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-body am-fr">
+                            <div class="am-form-group">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button type="button" class="am-btn am-btn-default am-btn-success" onclick="show_add({$desg_id})"><span class="am-icon-plus"></span> 新增</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="masonry" class="am-form-group">
+                                <ul  class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-imgbordered" data-am-gallery="{pureview:{target: 'a'}}">
+                                    <volist name="list" id="vo">
+                                    <li>
+                                        <div class="am-gallery-item">
+                                            <a href="{$vo.href}" class="">
+                                            <img src="{$vo.href}" style="max-width:250px"/>
+                                                <h3 class="am-gallery-title">{$vo.create}</h3>
+                                            </a>
+                                        </div>
+                                        <a href="javascript:;" class="am-badge am-badge-danger del_img" onclick="return del_img(this)" data='123' id="{$vo.id}">删除</a>
+                                    </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_photoadd"  style="position: fixed;">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">添加案例图
+            <!--<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>-->
+            </div>
+            <div class="am-modal-bd">
+                <form method="post" class="am-form tpl-form-line-form">
+                    <input name="desg_id" type="hidden" value="{$desg_id}">
+                    <div class="am-form-group">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">案例图片</label>
+                        <div class="am-u-sm-9" >
+                            <div class="am-form-group am-form-file">
+                                <div class="uploadBtn" style="height: 45px;">上传图片</div>
+                            </div>
+                            <div id="img_area" style="float: left;"></div>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-6 am-u-sm-push-3" style="margin-top: 35px;">
+                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <style>
+        .am-form-group{display: flex;}
+        .tpl-content-wrapper{margin-left:0px}
+    </style>
+    <include file="./Public/Store/html/footer.html" />
+    <script>
+        var parent_index = parent.layer.getFrameIndex(window.name);
+        var uploader = WebUploader.create({
+            auto: true,
+            pick: '.uploadBtn',
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*',
+            },
+            thumb:{
+                width: 950,
+                height: 1220,
+                quality: 100,
+                allowMagnify: false,
+                crop: false,
+                type: 'image/jpeg'
+            },
+        });
+        uploader.onFileQueued = function( file ) {
+            uploader.makeThumb( file, function( error, src ) {
+                if (error) return;
+                var html = '';
+                html += '<input name="image" type="hidden" value="'+src+'">';
+                html += '<img src="'+src+'" style="max-width:150px" onclick="del_img(this)">';
+                $('#img_area').html(html);
+                //parent.layer.iframeAuto(index);
+            });
+        }
+
+        $(function () {
+            var $container = $('#masonry');
+            $container.imagesLoaded(function() {
+                $container.masonry({
+                    itemSelector: 'li',
+                });
+            });
+
+            $('form').ajaxForm(function (data) {
+                if (data['success']) {
+                    layer.alert(data['info'], function(index) {
+                        $("#masonry").load(location.href+" #masonry");
+                        layer.close(index);
+                        layer.close(parent_index);
+                    });
+                } else {
+                    layer.msg(data['info'], {
+                        icon: 5
+                    });
+                }
+            });
+        });
+
+        function show_add(desg_id){
+            $('#modal_photoadd').css('position','inherit');
+            parent_index = layer.open({
+                type: 1,
+                title: false,
+                closeBtn: true,
+                area: '516px',
+                skin: 'layui-layer-nobg', //没有背景色 
+                shadeClose: true,
+                content: $('#modal_photoadd'),
+            });
+        }
+
+        function del_img(obj){
+
+            layer.confirm('您确定要删除该图片？', function(i){
+                var url = "{:U('Designer/del_photo')}";
+                //发送异步请求 删除照片
+                $.get(url, {img_id:$(obj).attr("id")}, function (data, textStatus){
+
+                });
+                $(obj).prev().remove();
+                $(obj).remove();
+                layer.close(i);
+                return false;
+            });
+            return false;
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="73e8fa3b-676f-4a7f-9d9f-2c15a5bf62e3" name="biezhuangle" url="http://47.93.4.46">
+        <fileTransfer host="47.93.4.46" port="22" accessType="SFTP" password="dfe8dfc3dfcfdfd0dfc2dfdfdfcbdfc4dfcddfc6dfcfdf9bdf98df99" username="root">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

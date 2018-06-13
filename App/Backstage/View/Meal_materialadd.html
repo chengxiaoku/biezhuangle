@@ -1,0 +1,248 @@
+<include file="./Public/Backstage/html/head.html" />
+<body data-type="index">
+<div class="am-g tpl-g">
+    <include file="./Public/Backstage/html/header.html" />
+    <include file="./Public/Backstage/html/sidebar.html" />
+    <!-- 内容区域 -->
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">方案选材<!--<span style="margin-left: 50px;">总金额:<span style="font-size: 20px; margin-left: 20px; font-weight: bold" id="money_js">0</span>元</span>(计算方式 平米 * 699 加或减 当前的价格)--></div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12">
+                            <form method="post" name="form" action="{:U('Meal/savemateriala')}"  class="am-form tpl-form-line-form">
+
+                                <div class="am-u-sm-2">
+                                <!-- 方案ID-->
+                                    <input name="meal_id" hidden value="{$meal_id}" style="float: left">
+                                </div>
+
+                                <div class="am-tabs" data-am-tabs>
+                                    <div class="am-form-group">
+                                        <label for="user-email" class="am-u-sm-8 am-form-label">方案名称</label>
+                                        <div class="am-u-sm-4">
+                                            <input type="text" class="tpl-form-input" name="meal_name" placeholder="请输入方案名称">
+                                        </div>
+                                    </div>
+                                    <ul class="am-tabs-nav am-nav am-nav-tabs">
+                                        {$title_str}
+                                    </ul>
+
+                                    <div class="am-tabs-bd">
+                                        {$cat_str}
+                                        <!--<div class="am-tab-panel am-fade am-in am-active" id="tab{$key}">-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 35px;">
+                                        <button id="buttom_ok" type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success ">保存</button>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="am-popup" id="my-popup">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+            <h4 class="am-popup-title">选择套餐商品</h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+        </div>
+        <div class="am-popup-bd">
+            <div class="am-tabs" data-am-tabs>
+                <ul class="am-tabs-nav am-nav am-nav-tabs">
+                    <li class="am-active" onclick="mark(0)">
+                        <a href="#ta1">全部商品</a>
+                    </li>
+                    <li onclick="mark(1)">
+                        <a href="#ta2">加价商品</a>
+                    </li>
+                    <li onclick="mark(2)">
+                        <a href="#ta3">减价商品</a>
+                    </li>
+                </ul>
+                <div class="am-tabs-bd">
+                    <div class="am-tab-panel am-fade am-in am-active" id="ta1" >无内容</div>
+                    <div class="am-tab-panel am-fade am-in" id="ta2" >无内容</div>
+                    <div class="am-tab-panel am-fade am-in" id="ta3" >无内容</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="./Public/Backstage/html/footer.html" />
+</body>
+<script type="text/javascript">
+    // 0:默认|1:加价|2:减价
+    //记录当前分类 ID
+    //同时出发筛选事件
+    var _mark = 0;
+    var c_brand_id = 0;
+    var c_cat_id = 0;
+    var room_id = 1;
+    function mark(mark){
+        _mark = mark;
+        goos_show(c_brand_id,c_cat_id,_mark,'dis');
+    }
+
+    //获取分类   获取品牌ID
+
+    url = "{:U('Api/Decorate/get_goods')}";
+    var content_top = '<table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id=""> <thead> <tr> <th>封面图</th> <th>名称</th><th>价格</th> <th>操作</th> </tr> </thead> <tbody> ';
+
+    var content_buttom = '</tbody></table>';
+    function goos_show(_brand_id,_cat_id,num,dis_type){
+        c_brand_id = _brand_id;
+        c_cat_id = _cat_id;
+        //设置模态框配置
+        options = {
+            dimmer : false,
+        };
+       //发送异步请求
+        var content = '';
+        $.get(url, { cat_id: _cat_id, brand_id: _brand_id ,markup :num},function(data){
+            var jsonarray= eval(data);
+            if(jsonarray == ''){
+                content = '';
+            }else{
+                $.each(jsonarray, function() {
+                    if(this.markup == 0){
+                        content +='<tr class="gradeX"><td><img src="'+this.coverimg+'" class="tpl-table-line-img" height="65"></td> <td>'+this.title+'</td>  <td>699标准商品</td> <td style="color: green" onclick="goods_ok('+this.id+',\''+this.title+'\',\''+this.coverimg+'\','+0+',\'t\')">选用</td></tr>';
+                    }else if(this.markup == 1){
+                        content +='<tr class="gradeX"><td><img src="'+this.coverimg+'" class="tpl-table-line-img" height="65"></td> <td>'+this.title+'</td>  <td>加价商品+'+this.markup_price+'元/平米</td> <td style="color: green" onclick="goods_ok('+this.id+',\''+this.title+'\',\''+this.coverimg+'\','+this.markup_price+',\'sub\')">选用</td></tr>';
+                    }else if(this.markup == 2){
+                        content +='<tr class="gradeX"><td><img src="'+this.coverimg+'" class="tpl-table-line-img" height="65"></td> <td>'+this.title+'</td>  <td>减价商品-'+this.markup_price+'元/平米</td> <td style="color: green" onclick="goods_ok('+this.id+',\''+this.title+'\',\''+this.coverimg+'\','+this.markup_price+',\'add\')">选用</td></tr>';
+                    }
+                });
+            }
+
+            var num = parseInt(_mark)+1;
+
+            $('#ta'+num).html(content_top+content+content_buttom);
+
+        });
+
+        if(dis_type == 'display'){
+            //模态框显示
+            $("#my-popup").modal(options);
+        }
+    }
+    //更要
+    _room_id_s = 2;
+    function get_room_id(id,room_id_s){
+        room_id = id;
+        _room_id_s  = room_id_s;
+    }
+    function goods_ok(goods_id,goods_title,goods_img_url,price,price_type){
+
+        layer.confirm('您确定要选择该商品？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+
+            //生成 新表单数据
+            var find_id = $('label[pt="pt'+c_cat_id+'"');
+
+            var text = '<span class="indent_clf" style="float: right"><input type="text" onkeyup="clearNoNum(this)" name="room_amount_data['+_room_id_s+'][]" style="width: 50px; float: left" value="1">/数量(个) <img style="width: 30px; height: 30px;" src="'+goods_img_url+'">'+goods_title.substr(0,4)+'...<input hidden name="room_data['+_room_id_s+'][]" value="'+goods_id+'"><input hidden name="price['+_room_id_s+'][]" value="'+price+'"><input hidden name="price_type['+_room_id_s+'][]" value="'+price_type+'"></span>';
+            //查找到要添加的位置
+            $("#tab"+room_id).find(find_id).next().html(text);
+            //一秒后关闭
+            layer.msg('选择成功', {icon: 1,time: 1000},function (){
+                //关闭弹出层
+                $("#my-popup").modal('close');
+            });
+        });
+
+    }
+
+    $("#buttom_ok").click(function (){
+        var t = "{$sum}";
+       // if($(".indent_clf").length == t){
+            var meal_val = $('input[name=meal_name]').val();
+            var meal_name_val = $.trim(meal_val);
+            if(meal_name_val == ''){
+                layer.msg('请输入套餐名称', {
+                    icon: 5
+                });
+            }else{
+                layer.confirm('您确定要保存？', function(i){
+                    layer.close(i);
+
+                   /* $('#goods_price').val($('#money_js').text());
+                    alert($('#goods_price').val());
+*/
+                    form.submit();
+                });
+            }
+       // }else{
+        //    layer.msg('请把所有商品选择完整', {
+        //        icon: 5
+        //    });
+       // }
+    });
+
+    function clearNoNum(obj) {
+        obj.value = obj.value.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符
+        obj.value = obj.value.replace(/^\./g,""); //验证第一个字符是数字而不是
+        obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+    }
+
+
+
+
+
+    var uploader = WebUploader.create({
+        auto: true,
+        pick: '.uploadBtn',
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*',
+        },
+        thumb:{
+            width: 950,
+            height: 1220,
+            quality: 100,
+            allowMagnify: false,
+            crop: false,
+            type: 'image/jpeg'
+        },
+    });
+    uploader.onFileQueued = function( file ) {
+        uploader.makeThumb( file, function( error, src ) {
+            if (error) return;
+            var html = '';
+            html += '<input name="image" type="hidden" value="'+src+'">';
+            html += '<img src="'+src+'" style="max-width:150px" onclick="del_img(this)">';
+            $('#img_area').html(html);
+            //parent.layer.iframeAuto(index);
+        });
+    }
+
+    function del_img(obj){
+        layer.confirm('您确定要删除该图片？', function(i){
+            $(obj).prev().remove();
+            $(obj).remove();
+            layer.close(i);
+        });
+
+    }
+</script>
+</html>

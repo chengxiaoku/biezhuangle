@@ -1,0 +1,146 @@
+<include file="./Public/Backstage/html/head.html" />
+<body data-type="index">
+    <div class="am-g tpl-g">
+        <include file="./Public/Backstage/html/header.html" />
+        <include file="./Public/Backstage/html/sidebar.html" />
+        <!-- 内容区域 -->
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">监理小哥信息管理</div>
+                                <!-- 搜索 -->
+                                <div class="am-u-lg-6" style="float: right">
+                                    <form method="get" action="{:U('Butler/search')}"  class="am-form tpl-form-line-form">
+                                        <div class="am-input-group">
+                                                  <span class="am-input-group-btn">
+                                                    <button class="am-btn am-btn-default" type="submit" onclick="return search()"><span class="am-icon-search"></span> </button>
+                                                  </span>
+                                            <input type="text" value="{$se_val|default=''}" id="search_text" name="val" class="am-form-field" placeholder="请输入管家姓名">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- 搜索 end-->
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button type="button" class="am-btn am-btn-default am-btn-success" onclick="show_add()"><span class="am-icon-plus"></span> 新增</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="">
+                                        <thead>
+                                        <tr>
+                                            <th>照片</th>
+                                            <th>姓名</th>
+                                            <th>联系电话</th>
+                                            <th>微信</th>
+                                            <th>等级</th>
+                                            <th>金额</th>
+                                            <th>支付宝姓名</th>
+                                            <th>支付宝账号</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="list" id="vo" mod="2">
+                                            <tr class="gradeX" >
+                                                <td><img src="{$vo.photo}" width="120px" height="120px"></td>
+                                                <td>{$vo.name}</td>
+                                                <td>{$vo.phone}</td>
+                                                <td>{$vo.wechat}</td>
+                                                <td>
+                                                    <switch name="vo.level" >
+                                                        <case value="0">普通</case>
+                                                        <case value="1">银牌</case>
+                                                        <case value="2">金牌</case>
+                                                    </switch>
+                                                </td>
+                                                <td>{$vo.money}</td>
+                                                <td>{$vo.alipay_name}</td>
+                                                <td>{$vo.alipay_no}</td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:return false;" onclick="show_update(this)" url="{:U('Butler/update',array('id'=>$vo['id']))}">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:return false;" onclick="show_del(this)" url="{:U('Butler/del',array('id'=>$vo['id']))}" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination">
+                                            {$page}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="./Public/Backstage/html/footer.html" />
+</body>
+<script type="text/javascript">
+    function show_add(){
+        layer.open({
+            type: 2,
+            title: '添加装修小哥',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['650px', '80%'],
+            content: "{:U('add')}",
+        });
+    }
+    function show_update(obj){
+        var url = $(obj).attr('url');
+        layer.open({
+            type: 2,
+            title: '修改管家信息',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['650px', '80%'],
+            content: url,
+        });
+    }
+    function show_del(obj){
+        var url = $(obj).attr('url');
+        $.get(url, function(result){
+            if(result == 1){
+                layer.msg('删除成功', {
+                    icon: 6
+                });
+            }else{
+                layer.msg('删除失败', {
+                    icon: 5
+                });
+            }
+        });
+    }
+    //提交搜索事件来判断是否为空， 为空不能禁止提交
+    //在此之前禁止输入数字之外的字符
+    function search(){
+        var search_text = $('#search_text').val();
+        if(search_text == ''){
+            return false;
+        }
+    };
+</script>
+</html>

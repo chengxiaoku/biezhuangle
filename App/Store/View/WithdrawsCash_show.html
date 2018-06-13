@@ -1,0 +1,103 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+<script src="__JS__/main.js"></script>
+<div class="am-g tpl-g">
+    <script src="__JS__/theme.js"></script>
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-body am-fr">
+                        <form method="post" action="{:U('WithdrawsCash/show')}"  class="am-form tpl-form-line-form">
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">到账支付宝</label>
+                                <eq name="list.alipay_no" value="">
+                                    <div class="am-u-sm-9" style="margin-top: 7px;">
+                                        <span style="margin-left: 0px;"> <a href="#" onclick="return add_apl()">添加支付账号</a></span>
+                                    </div>
+                                <else/>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" class="tpl-form-input" disabled="disabled" name="alipay_no" value="{$list.alipay_no}" placeholder="支付宝账号">
+                                    </div>
+                                </eq>
+
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">提现余额</label>
+                                <div class="am-u-sm-9" style="margin-top: 7px;">
+                                    <span style="font-weight: bold">¥</span> <span style="font-weight: bold" id="txye">{$list.money}</span>
+                                    <span style="margin-left: 100px;"> <a href="#" onclick="tx()">全部提现</a></span>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">提现金额</label>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-5 am-form-label">
+                                    <input type="text" id="txje" onkeyup='clearNoNum(this)' name="txje" class="tpl-form-input" style="margin-left: 80px;font-weight: bolder;font-size: 21px; color: rgba(6, 4, 7, 0.99)">
+                                </label>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-7 am-form-label">24小时内到账</label>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3">
+                                    <button id="btn_submit" type="submit" style="margin-left: 45px;" class="am-btn am-btn-primary tpl-btn-bg-color-success ">确认</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Public/Store/html/footer.html" />
+<script type="text/javascript">
+    function clearNoNum(obj) {
+        obj.value = obj.value.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符
+        obj.value = obj.value.replace(/^\./g,""); //验证第一个字符是数字而不是
+        obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+    }
+
+    function tx(){
+        $('#txje').val($('#txye').text());
+    }
+    var no = "{$list['alipay_no']}";
+    $(function () {
+        $('form').ajaxForm(function (data) {
+            //判断是否金额为0
+//            if($.trim(no) == ''){
+//                layer.msg('请添加支付宝账号', {icon: 5});
+//                return false;
+//            }
+            if(parseFloat($('#txye').text()) == 0){
+                layer.msg('余额不足', {icon: 5});
+                return false;
+            }
+            if (data['success']) {
+                layer.alert(data['info'], function (index) {
+                    parent.$("#example-r").load(parent.location.href+" #example-r");
+                    parent.layer.closeAll();
+                });
+            } else {
+                layer.msg(data['info'], {
+                    icon: 5
+                });
+            }
+        });
+    });
+    var url = "{:U('set/index')}";
+function add_apl(){
+    window.open(url);
+    parent.layer.closeAll(); //关闭了弹框
+    return false;
+}
+</script>
+</body>
+
+</html>

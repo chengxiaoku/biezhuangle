@@ -1,0 +1,104 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Decorate_Bar">
+	<div class="item-title">
+		<h3>装修订单</h3>
+		<ul class="tab-base">
+			<if condition="Is_Auth('Cms/Decorate/index')">
+			<li><a href="{:U('Cms/Decorate/index')}"><span>列表</span></a></li>
+			</if>
+			<if condition="Is_Auth('Cms/Decorate/add')">
+			<li><a href="{:U('Cms/Decorate/add')}"><span>新增</span></a></li>
+			</if>
+			<li><a class="current" href="#"><span>更新</span></a></li>
+		</ul>
+	</div>
+</div>
+<form id="Decorate_Form" method="post">
+<table class="table tb-type2 nobdb">
+	<tbody>
+			<tr>
+			<td colspan="2" class="required"><label for="for_city_id">城市:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="city_id" value="{$_info["city_id"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_area">面积:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="area" value="{$_info["area"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_room">室:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="room" value="{$_info["room"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_hall">厅:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="hall" value="{$_info["hall"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_cook">厨:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="cook" value="{$_info["cook"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_toilet">卫:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="toilet" value="{$_info["toilet"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_balcony">阳台:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="balcony" value="{$_info["balcony"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_create_time">申请时间:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="create_time" value="{$_info["create_time"]|date='Y-m-d H:i:s',###}" type="text" class="easyui-datetimebox"style="height:30px;" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_total_price">总价:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="total_price" value="{$_info["total_price"]}" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_title">方案标题:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="title" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["title"]}" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_explain">方案说明:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="explain" value="{$_info["explain"]}" type="text" class="easyui-textbox" data-options="required:false,multiline:true" style="width:300px; height:80px;"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_status">状态:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><select name="status" class="easyui-combobox" style="height:30px;" data-options="value:'{$_info["status"]}',multiple:false,required:false,editable:false"><option value="0" >默认</option><option value="1" >生成方案</option></select></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_address">详细地址:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="address" value="{$_info["address"]}" type="text" class="easyui-textbox" data-options="required:false,multiline:true" style="width:300px; height:80px;"></td>
+			<td class="vatop tips"></td>
+		</tr>	</tbody>
+	<tfoot>
+		<tr class="tfoot">
+			<td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#Decorate_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+		</tr>
+	 </tfoot>
+</table>
+<input name="id" type="hidden" value="{:I('get.id')}" />
+</form></block>

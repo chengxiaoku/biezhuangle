@@ -1,0 +1,59 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+<script src="__JS__/main.js"></script>
+<div class="am-g tpl-g">
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-body am-fr ">
+                        <form method="post"  class="am-form tpl-form-line-form">
+                            <input name="id" type="hidden" value="{$data.id}">
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">请输入套餐风格名称</label>
+                                <div class="am-u-sm-9" style="width:120px">
+                                    <input type="text" class="tpl-form-input"  name="style_name" value="{$data.style_name}" placeholder="请输入套餐风格名称">
+                                </div>
+                            </div>
+
+
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 35px;">
+                                    <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .am-form-group{display: flex;}
+</style>
+<include file="./Public/Store/html/footer.html" />
+<script>
+
+    $(function () {
+        $('form').ajaxForm(function (data) {
+            if (data['success']) {
+                layer.alert(data['info'], function (data) {
+                    parent.$("#example-r").load(parent.location.href+" #example-r");
+                    //layer.closeAll();
+                    parent.layer.closeAll();
+                    window.location.reload();
+                });
+            } else {
+                layer.msg(data['info'], {
+                    icon: 5
+                });
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

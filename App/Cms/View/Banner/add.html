@@ -1,0 +1,34 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Banner_Bar">
+	<div class="item-title">
+		<h3>轮播管理</h3>
+		<ul class="tab-base">
+			<if condition="Is_Auth('Cms/Banner/index')">
+			<li><a href="{:U('Cms/Banner/index')}"><span>列表</span></a></li>
+			</if>
+			<li><a class="current"href="{:U('Cms/Banner/add')}"><span>新增</span></a></li>
+		</ul>
+	</div>
+</div>
+<form id="Banner_Form" method="post">
+<table class="table tb-type2 nobdb">
+	<tbody>
+			<tr>
+			<td colspan="2" class="required"><label for="for_sort">排序:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="sort" value="1" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_image">图片:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><div class="t_img_box"><img src="" /></div><input id="img_image_box" name="image" value="" class="easyui-textbox" data-options="buttonText:'选择',buttonIcon:'iconfont icon-pic',prompt:'上传图片...',onClickButton:function(){updata_image('img_image_box','t_img_box')}" style="width:250px;height:30px;" ></td>
+			<td class="vatop tips"></td>
+		</tr>	</tbody>
+	<tfoot>
+		<tr class="tfoot">
+			<td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#Banner_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+		</tr>
+	 </tfoot>
+</table>
+</form></block>

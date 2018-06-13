@@ -1,0 +1,49 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Compact_Bar">
+	<div class="item-title">
+		<h3>装修合同</h3>
+		<ul class="tab-base">
+			<if condition="Is_Auth('Cms/Compact/index')">
+			<li><a href="{:U('Cms/Compact/index')}"><span>列表</span></a></li>
+			</if>
+			<li><a class="current"href="{:U('Cms/Compact/add')}"><span>新增</span></a></li>
+		</ul>
+	</div>
+</div>
+<form id="Compact_Form" method="post">
+<table class="table tb-type2 nobdb">
+	<tbody>
+			<tr>
+			<td colspan="2" class="required"><label for="for_deco_id">装修订单:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="deco_id" value="" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+			<td class="vatop tips"></td>
+		</tr><tr>
+			<td colspan="2" class="required"><label for="for_content">内容:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><textarea id="editor_content" name="content" config_date="0" style="width:500px;height:300px;" class="easyui-kindeditor"></textarea></td>
+		</tr>
+		<tr class="noborder">
+			<td colspan="2" class="vatop tips"></td>
+		</tr>
+			<tr>
+			<td colspan="2" class="required"><label for="for_type">类型:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><select name="type" class="easyui-combobox" style="height:30px;" data-options="value:'0',multiple:false,required:false,editable:false"><option value="0" >补充合同</option><option value="1" >正式合同</option></select></td>
+			<td class="vatop tips"></td>
+		</tr>		<tr>
+			<td colspan="2" class="required"><label for="for_create_time">创建时间:</label></td>
+		</tr>
+		<tr class="noborder">
+			<td class="vatop rowform"><input name="create_time" value="" type="text" class="easyui-datetimebox" style="height:30px;" data-options="required:false"></td>
+			<td class="vatop tips"></td>
+		</tr>	</tbody>
+	<tfoot>
+		<tr class="tfoot">
+			<td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#Compact_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+		</tr>
+	 </tfoot>
+</table>
+</form></block>

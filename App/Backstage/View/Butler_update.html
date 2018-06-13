@@ -1,0 +1,191 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+<script src="__JS__/main.js"></script>
+<div class="am-g tpl-g">
+    <script src="__JS__/theme.js"></script>
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-body am-fr">
+                        <form method="post"  class="am-form tpl-form-line-form">
+                            <input hidden="hidden" value="{$info.id}" name="id">
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">姓名</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" name="name" value="{$info.name}" placeholder="请输入姓名">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">电话(用户名)</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" name="phone" value="{$info.phone}" placeholder="请输入电话">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">微信</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" name="wechat" value="{$info.wechat}" placeholder="请输入微信">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">支付宝名称</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" name="alipay_name" value="{$info.alipay_name}" placeholder="请输入支付宝名称">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">支付宝账号</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" name="alipay_no" value="{$info.alipay_no}" placeholder="请输入支付宝账号">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">管家等级</label>
+                                <div class="am-u-sm-9">
+                                    <select name="level"  data-am-selected  id="demo-default-selected">
+                                        <option selected value=""></option>
+                                        <option value="0" selected="true">普通</option>
+                                        <option value="1">银牌</option>
+                                        <option value="2">金牌</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">个人简介</label>
+                                <div class="am-u-sm-9">
+                                    <textarea class="" rows="3" name="intro" placeholder="请输入个人简介">{$info.intro}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">照片</label>
+                                <div class="am-u-sm-9" >
+                                    <div class="am-form-group am-form-file">
+                                        <div class="uploadBtn" style="height: 45px;">上传照片</div>
+                                        <small style="padding: 15px;color: #888;">双击图片删除。</small>
+                                    </div>
+                                    <div id="img_area">
+                                        <input name="photo" type="hidden" value="{$info.photo}">
+                                        <img src="{$info.photo}" style="max-width:150px" ondblclick="del_img(this)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">照片2</label>
+                                <div class="am-u-sm-9" >
+                                    <div class="am-form-group am-form-file">
+                                        <div class="uploadBtn1" style="height: 45px;">上传照片</div>
+                                        <small style="padding: 15px;color: #888;">双击图片删除。</small>
+                                    </div>
+                                    <div id="img_area1">
+                                        <input name="photo1" type="hidden" value="{$info.photo}">
+                                        <img src="{$info.photo}" style="max-width:150px" ondblclick="del_img(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 35px;">
+                                    <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Public/Store/html/footer.html" />
+<script>
+    var index = parent.layer.getFrameIndex(window.name);
+    var uploader = WebUploader.create({
+        auto: true,
+        pick: '.uploadBtn',
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*',
+        },
+        thumb:{
+            width: 320,
+            height: 422,
+            quality: 100,
+            allowMagnify: false,
+            crop: false,
+            type: 'image/jpeg'
+        },
+    });
+    uploader.onFileQueued = function( file ) {
+        uploader.makeThumb( file, function( error, src ) {
+            if (error) return;
+            var html = '';
+            html += '<input name="photo" type="hidden" value="'+src+'">';
+            html += '<img src="'+src+'" style="max-width:150px" ondblclick="del_img(this)">';
+            $('#img_area').html(html);
+            parent.layer.iframeAuto(index);
+        });
+    };
+
+    var uploader1 = WebUploader.create({
+        auto: true,
+        pick: '.uploadBtn1',
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*',
+        },
+        thumb:{
+            width: 320,
+            height: 422,
+            quality: 100,
+            allowMagnify: false,
+            crop: false,
+            type: 'image/jpeg'
+        },
+    });
+    uploader1.onFileQueued = function( file ) {
+        uploader1.makeThumb( file, function( error, src ) {
+            if (error) return;
+            var html = '';
+            html += '<input name="photo3" type="hidden" value="'+src+'">';
+            html += '<img src="'+src+'" style="max-width:150px" ondblclick="del_img(this)">';
+            $('#img_area1').html(html);
+            parent.layer.iframeAuto(index);
+        });
+    };
+
+    $(function () {
+
+        $('form').ajaxForm(function (data) {
+            if (data['success']) {
+                layer.alert(data['info'], function (data) {
+                    parent.$("#example-r").load(parent.location.href+" #example-r");
+                    parent.layer.close(index);
+                });
+            } else {
+                layer.msg(data['info'], {
+                    //错误提示
+                    icon: 5
+                });
+            }
+        });
+    });
+
+    function del_img(obj){
+        layer.confirm('您确定要删除该图片？', function(i){
+            $(obj).prev().remove();
+            $(obj).remove();
+            layer.close(i);
+        });
+
+    }
+
+
+
+</script>
+</body>
+
+</html>l>

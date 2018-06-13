@@ -1,0 +1,69 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Favor_Bar">
+	<div class="item-title">
+		<h3>收藏</h3>
+		<ul class="tab-base">
+			<li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('Favor_Data_List');"><span>列表</span></a></li>
+			<li><a href="JavaScript:void(0);" onclick="Data_Search('Favor_Search_From','Favor_Data_List');"><span>搜索</span></a></li>
+			<if condition="Is_Auth('Cms/Favor/add')">
+			<li><a href="{:U('Cms/Favor/add')}"><span>新增</span></a></li>
+			</if>
+		</ul>
+	</div>
+</div>
+<div style="display: none">
+  <form id="Favor_Search_From" class="search_from">
+	<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+			<th>类型 : </th>
+			<td><input name="s_tid" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>文章 : </th>
+			<td><input name="s_aid" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>用户 : </th>
+			<td><input name="s_uid" type="text" class="easyui-numberbox" style="height:30px;" data-options="precision:'0',decimalSeparator:'.',groupSeparator:',',required:false"></td>
+		</tr><tr>
+			<th>时间 : </th>
+			<td><input name="s_create_time_min" type="text" class="easyui-datetimebox" style="height:30px;"> - <input name="s_create_time_max" type="text" class="easyui-datetimebox" style="height:30px;"></td>
+		</tr>    </table>
+  </form>
+</div>
+
+<table id="Favor_Data_List"></table>
+
+<script type="text/javascript">
+$(function() {
+	$("#Favor_Data_List").datagrid({
+		url : "{:U('Favor/index')}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [ 10, 20, 50 ],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc',
+		toolbar : '#Favor_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40,sortable:true},
+{field : "tid",title : "类型",width :200,sortable:true},{field : "aid",title : "文章",width :200,sortable:true},{field : "uid",title : "用户",width :200,sortable:true},{field : "create_time",title : "时间",width :200,sortable:true,formatter: function (value, row, index) {
+			return u_to_ymdhis(value)
+		}},			{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+				operate_menu='';
+				
+				<if condition="Is_Auth('Cms/Favor/edit')">
+				operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+				</if>
+
+				<if condition="Is_Auth('Cms/Favor/del')">
+				operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','Favor_Data_List');\">删除</a>";
+				</if>
+
+				return operate_menu;
+			}}
+		]]
+	});
+})
+</script></block>

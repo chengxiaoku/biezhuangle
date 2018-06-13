@@ -1,0 +1,149 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+<script src="__JS__/main.js"></script>
+<div class="am-g tpl-g">
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-body am-fr">
+                        <form method="post"  class="am-form tpl-form-line-form">
+                            <input name="deco_id" type="hidden" value="{$deco_id}">
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">相册名称</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" name="name" placeholder="请输入相册名称">
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">户型类型</label>
+                                <div class="am-u-sm-9">
+                                    <select name="area_id" data-am-selected>
+                                        <volist name="area_data" id="vo">
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">风格类型</label>
+                                <div class="am-u-sm-9">
+                                    <select name="style_id" data-am-selected>
+                                        <volist name="style_data" id="vo">
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-u-sm-3 am-form-label">相册封面</label>
+                                <div class="am-u-sm-9" >
+                                    <div class="am-form-group am-form-file">
+                                        <div class="uploadBtn" style="height: 45px;">上传图片</div>
+                                        <small style="padding: 15px;color: #888;">双击图片删除。(长*宽建议:300px*750px,照片小于1M)</small>
+
+                                    </div>
+                                    <div id="img_area"></div>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 35px;">
+                                    <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .am-form-group{display: flex;}
+</style>
+<include file="./Public/Store/html/footer.html" />
+<script>
+    var index = parent.layer.getFrameIndex(window.name);
+    thumbnailWidth = 1080;
+    thumbnailHeight = 470;
+    img_size = 1;  //单位 M
+    var uploader = WebUploader.create({
+        auto: false,
+        pick: '.uploadBtn',
+        fileNumLimit: 1,//上传数量限制
+        //fileSizeLimit: 1024 * 1024,//限制上传所有文件大小
+        fileSingleSizeLimit: 1024 * 1024 * parseInt(img_size),//限制上传单个文件大小
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*',
+        },
+        thumb:{
+            //超过此宽高进行压缩
+            width: 1220,
+            height: 950,
+
+            quality: 100,//清晰度
+            allowMagnify: false, //不失真
+            crop: false,
+            type: 'image/jpeg'
+        },
+    });
+    uploader.onFileQueued = function( file ) {
+        uploader.makeThumb( file, function( error, src ) {
+            if (error) return;
+            var html = '';
+            html += '<input name="image" type="hidden" value="'+src+'">';
+            html += '<img src="'+src+'" style="max-width:150px" ondblclick="del_img(this)">';
+            $('#img_area').html(html);
+            parent.layer.iframeAuto(index);
+        },thumbnailWidth, thumbnailHeight );
+    };
+    //不满足条件终止上传  uploader.cancelFile( file );
+
+    //图片上传作物提示
+    uploader.on("error", function (type) {
+        if (type == "Q_TYPE_DENIED") {
+            layer.msg("请上传JPG、PNG、GIF、BMP格式文件");
+        } else if (type == "Q_EXCEED_SIZE_LIMIT" || type == 'F_EXCEED_SIZE') {
+            layer.msg("文件大小不能超过"+img_size+"M");
+        }else if(type == "Q_EXCEED_NUM_LIMIT"){
+            layer.msg("只能上传一张图片");
+        }else{
+            layer.msg("上传出错！请检查文件大小(小于"+img_size+"M)重新上传！错误代码"+type);
+        }
+    });
+    //图片上传作物提示 end
+    $(function () {
+        $('form').ajaxForm(function (data) {
+            if (data['success']) {
+                layer.alert(data['info'], function (data) {
+                    parent.$("#example-r").load(parent.location.href+" #example-r");
+                    parent.layer.close(index);
+                });
+            } else {
+                layer.msg(data['info'], {
+                    icon: 5
+                });
+            }
+        });
+    });
+
+    function del_img(obj){
+        layer.confirm('您确定要删除该图片？', function(i){
+            $(obj).prev().remove();
+            $(obj).remove();
+            layer.close(i);
+        });
+
+    }
+
+</script>
+</body>
+
+</html>

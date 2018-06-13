@@ -1,0 +1,102 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+<script src="__JS__/main.js"></script>
+<div class="am-g tpl-g">
+    <include file="./Public/Store/html/header.html" />
+    <include file="./Public/Store/html/sidebar.html" />
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">提现管理 (余额¥<span style="color: red" id="money_ye">{$money.money}</span>)
+                                <button type="button" onclick="show_goods()" style="margin-left: 30px;" class="am-btn am-btn-primary am-btn-sm">提现</button>
+                            </div>
+
+                        </div>
+
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12">
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                    <thead>
+                                    <tr>
+                                        <th>体现对象</th>
+                                        <th>提现金额</th>
+                                        <th>发起时间</th>
+                                        <th>提现状态</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist name="list" id="vo" mod="2">
+                                        <tr class="gradeX" >
+                                            <td>{$vo.name}</td>
+                                            <td>{$vo.amount}</td>
+                                            <td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+                                            <td>
+                                                <eq name="vo.status" value="0">
+                                                    申请中
+                                                    <else/>
+                                                    已完成
+                                                </eq>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        {$page}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Public/Store/html/footer.html" />
+</body>
+<script type="text/javascript">
+    var money = "{$money.money}";
+    function show_goods(){
+        var index = layer.open({
+            type: 2,
+            title:'提现操作',
+            content: "{:U('WithdrawsCash/show')}",
+            area: ['500px', '80%'],
+            maxmin: true
+        });
+    }
+    function tx(){
+        if(money == 0){
+            layer.msg('余额不足', {icon: 5});
+            layer.close(index); //关闭窗口
+            return false;
+        }else{
+            layer.open({
+                title:'提现操作',
+                type: 1,
+                area: ['600px', '500px'],
+                btnAlign: 'l',
+                scrollbar: false,
+                shadeClose: true,
+                btn: ['确认', '取消'],
+                closeBtn:2,
+                content: "<div style='padding:20px; color: red'>是否确认要提现？</div>",
+                yes: function(index, layero) {
+                    layer.close(index); //关闭窗口
+                }
+            });
+        }
+
+
+    }
+
+</script>
+</html>

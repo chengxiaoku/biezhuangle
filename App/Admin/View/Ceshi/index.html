@@ -1,0 +1,58 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="ceshi_Bar">
+	<div class="item-title">
+		<h3>测试模型</h3>
+		<ul class="tab-base">
+			<li><a class="current" href="JavaScript:void(0);" onclick="Data_Reload('ceshi_Data_List');"><span>列表</span></a></li>
+			<li><a href="JavaScript:void(0);" onclick="Data_Search('ceshi_Search_From','ceshi_Data_List');"><span>搜索</span></a></li>
+			<if condition="Is_Auth('Admin/ceshi/add')">
+			<li><a href="{:U('Admin/ceshi/add')}"><span>新增</span></a></li>
+			</if>
+		</ul>
+	</div>
+</div>
+<div style="display: none">
+  <form id="ceshi_Search_From" class="search_from">
+	<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tr>
+			<th>test : </th>
+			<td><input name="s_test" type="text" class="easyui-textbox" style="height:30px;"></td>
+		</tr>    </table>
+  </form>
+</div>
+
+<table id="ceshi_Data_List"></table>
+
+<script type="text/javascript">
+$(function() {
+	$("#ceshi_Data_List").datagrid({
+		url : "{:U('ceshi/index')}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [ 10, 20, 50 ],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc',
+		toolbar : '#ceshi_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40,sortable:true},
+{field : "test",title : "test",width :100,sortable:true},			{field : "operate",title : "操作",width : 200,formatter: function (value, row, index) {
+				operate_menu='';
+				
+				<if condition="Is_Auth('Admin/ceshi/edit')">
+				operate_menu = operate_menu+"<a href='<?php echo U('edit'); ?>&id="+row.id+"' >编辑</a>";
+				</if>
+
+				<if condition="Is_Auth('Admin/ceshi/del')">
+				operate_menu = operate_menu+" | <a href='#' onclick=\"Data_Remove('<?php echo U('del'); ?>&id="+row.id+"','ceshi_Data_List');\">删除</a>";
+				</if>
+
+				return operate_menu;
+			}}
+		]]
+	});
+})
+</script></block>

@@ -1,0 +1,48 @@
+<extend name="Public/base"/><block name="body"><div class="fixed-bar" id="Help_Bar">
+    <div class="item-title">
+        <h3>用户管理</h3>
+        <ul class="tab-base">
+            <if condition="Is_Auth('Cms/Help/index')">
+                <li><a href="{:U('Cms/Help/index')}"><span>列表</span></a></li>
+            </if>
+            <if condition="Is_Auth('Cms/Help/add')">
+                <li><a href="{:U('Cms/Help/add')}"><span>新增</span></a></li>
+            </if>
+            <li><a class="current" href="#"><span>更新</span></a></li>
+        </ul>
+    </div>
+</div>
+    <form id="Help_Form" method="post">
+        <table class="table tb-type2 nobdb">
+            <tbody>
+            <tr>
+                <td colspan="2" class="required"><label for="for_username">标题名:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input name="title" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["title"]}" data-options="required:false"></td>
+                <td class="vatop tips"></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="required"><label for="for_address">内容:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input name="content" value="{$_info["content"]}" type="text" class="easyui-textbox" data-options="required:false,multiline:true" style="width:300px; height:80px;"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="required"><label for="for_phone">排序:</label></td>
+            </tr>
+            <tr class="noborder">
+                <td class="vatop rowform"><input name="sort" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["sort"]}" data-options="required:false"></td>
+                <td class="vatop tips"></td>
+            </tr>
+            </tbody>
+            </tfoot>
+            <tr class="tfoot">
+                <td colspan="2"><a class="easyui-linkbutton" href="JavaScript:void(0);" onclick="$('#Help_Form').submit();" data-options="iconCls:'iconfont icon-edit'"><span style="font-size: 14px; font-weight: 600;">提交</span></a></td>
+            </tr>
+            </tfoot>
+        </table>
+        <input name="id" type="hidden" value="{:I('get.id')}" />
+    </form></block>

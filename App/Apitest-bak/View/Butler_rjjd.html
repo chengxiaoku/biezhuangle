@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>管家日记-{$info.name}</title>
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/fenxiang-biezhuangle.css">
+    <link rel="stylesheet" href="__CSS__/liu.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/bootstrap.min.js"></script>
+    <script src="__JS__/TouchSlide.js"></script>
+    <script src="__JS__/jquery.flexslider-min.js"></script>
+    <script src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__JS__/radialIndicator.js"></script>
+</head>
+<body style="background-color: #ffffff;">
+<header class="zxgs-header navbar-fixed-top" style="text-align: center;z-index: 2;">
+    <!--<a href="#"><img src="__IMG__/back-arrow-black.png" alt=""></a>-->
+    <p style="display: inline-block;">管家日记-{$info.name}</p>
+   <!-- <div class="zxgs-header-fenxiang"><img src="__IMG__/header-fenxiang.png" alt=""></div>
+    <div class="zxgs-header-shoucang"><img src="__IMG__/shoucang.png" alt=""></div>-->
+    <div class="clearfix"></div>
+</header>
+<div style="height: 0.83rem;"></div>
+<div class="zxgj-gjrj-sgjd-list" style="border-bottom: 1px solid #dcdcdc;">
+    <div class="zxgj-gjrj-sgjd-left">
+        <ul style="height: 0;">
+            <li class="zxgj-gjrj-sgjd-left-title">list</li>
+            <li class="zxgj-gjrj-sgjd-left-content">{$jdid}</li>
+        </ul>
+    </div>
+    <div class="zxgj-gjrj-sgjd-right">
+        <ul style="background-color: #ffffff;">
+            <li class="zxgj-gjrj-sgjd-right-title">{$info.name}</li>
+            <li class="zxgj-gjrj-sgjd-right-time"><p>完成时间：</p><p>{$info.end_time}</p></li>
+            <li class="zxgj-gjrj-sgjd-right-tab">
+                <div><p class="sgjd-right-tab-1">完成</p></div>
+                <div><p class="sgjd-right-tab-2 sgjd-right-tab-none">进行中</p></div>
+                <div><p class="sgjd-right-tab-3 sgjd-right-tab-none">等待验收</p></div>
+                <div><p class="sgjd-right-tab-4 sgjd-right-tab-none">修复中</p></div>
+            </li>
+            <li class="zxgj-gjrj-sgjd-right-manyi">{$info.user_pj}</li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<!--<div class="gjrj-swiper">-->
+    <!--<div class="swiper-container swiper-container-gjrj">-->
+        <!--<div class="swiper-wrapper">-->
+            <!--<volist name="info['list'][0]['img']" id="vo">-->
+                <!--<div class="swiper-slide swiper-slide-gjrj-img"><div><img src="{$vo}" alt="" class="swiper-slide-gjrj-img-img"></div></div>-->
+            <!--</volist>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="swiper-pagination swiper-pagination-gjrj"></div>&ndash;&gt;-->
+        <!--<div style="height: 0.2rem"></div>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="mainContent">
+    <!--<img src="__IMG__/azbanner.jpg" class="img-responsive" alt="">-->
+    <div class="">
+        <div id="tabBox1" class="zxrj-img-btn">
+            <div class="hd">
+                <ul>
+                    <volist name="info['list'][0]['img']" id="vo">
+                        <li><a href="javascript:void(0)"><img src="{$vo}" alt=""></a></li>
+                    </volist>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="bd azgf" id="tabBox1-bd"><!-- 添加id，js用到 -->
+                <volist name="info['list'][0]['img']" id="vo">
+                    <div class="con"><!-- 高度自适应需添加外层 -->
+                        <ul>
+                            <div class="titlename">
+                                <img src="{$vo}" width="100%">
+                            </div>
+                        </ul>
+                    </div>
+                </volist>
+            </div>
+        </div>
+        <script type="text/javascript">
+            TouchSlide( { slideCell:"#tabBox1",
+                endFun:function(i){ //高度自适应
+                    var bd = document.getElementById("tabBox1-bd");
+                    bd.parentNode.style.height = bd.children[i].children[0].offsetHeight+"px";
+                    if(i>0)bd.parentNode.style.transition="200ms";//添加动画效果
+                }
+            } );</script>
+    </div>
+</div>
+<div class="gjrj-tongguo">
+<if condition="$info['list'][0]['check'] neq 1">
+    <img src="__IMG__/pass.png" alt="">
+    <else/>
+    <img  src="__IMG__/refuse.png" alt="">
+</if>
+
+
+</div>
+<div class="clearfix"></div>
+<div class="girj-xmsm">
+    <ul>
+        <li>项目说明：<p>{$info['list'][0]['content']}</p></li>
+        <li>项目建议：<p>{$info['list'][0]['propose']}</p></li>
+    </ul>
+</div>
+
+<div style="height: 0.15rem;background-color: #ebebeb;"></div>
+<div class="gjrj-commit-title">回复</div>
+<volist name="user_com" id="vo">
+    <div class="gjrj-commit-part">
+        <ul class="gjrj-commit-part-left">
+            <li><img src="{$vo.head_img}" alt=""></li>
+        </ul>
+            <ul class="gjrj-commit-part-right">
+                <li class="gjrj-commit-part-right-username"><p>{$vo.nickname}</p></li>
+                <li class="gjrj-commit-part-right-time"><p>{$vo.create_time|date='Y-m-d',###}</p></li>
+                <div class="clearfix"></div>
+                <li class="gjrj-commit-part-right-content">{$vo.content}</li>
+            </ul>
+        <div class="clearfix"></div>
+    </div>
+</volist>
+
+<div class="girj-left-list">
+    <ul class="girj-left-list-title">查看目录</ul>
+    <div style="height: 0.3rem;"></div>
+    <ul>
+        <li class="girj-left-list-title-part">
+            <p class="girj-left-list-quan"></p><p class="girj-left-list-content"><a href="#part1">水电材料进场，工...</a></p><div class="clearfix"></div>
+            <div class="girj-left-list-title-line"><p></p></div>
+            <p class="girj-left-list-quan"></p><p class="girj-left-list-content"><a href="#part2">水电施工完毕，验...</a></p><div class="clearfix"></div>
+            <div class="girj-left-list-title-line"><p></p></div>
+            <p class="girj-left-list-quan"></p><p class="girj-left-list-content"><a href="#part3">防水施工完毕，验...</a></p><div class="clearfix"></div>
+            <div class="girj-left-list-title-line"><p></p></div>
+            <p class="girj-left-list-quan"></p><p class="girj-left-list-content"><a href="#part4">瓦工施工完毕，验...</a></p><div class="clearfix"></div>
+            <div class="girj-left-list-title-line"><p></p></div>
+            <p class="girj-left-list-quan"></p><p class="girj-left-list-content"><a href="#part5">木工材料进场验收。</a></p><div class="clearfix"></div>
+            <div class="girj-left-list-title-line"><p></p></div>
+            <p class="girj-left-list-quan"></p><p class="girj-left-list-content"><a href="#part6">木工施工完毕，验...</a></p><div class="clearfix"></div>
+            <div class="girj-left-list-title-line"><p></p></div>
+        </li>
+    </ul>
+</div>
+<!--<div class="zxrj-part-content-right-img-big" style="width: 100%"><img src="http://biezhuangle.com/Uploads/1/image/2017-06-23/1498199429345.jpg"  alt=""></div>-->
+<!--<div class="sjs-index-swiper" style="top:10%;width: 100%;">-->
+    <!--<div class="swiper-container swiper-container-img">-->
+        <!--<div class="swiper-wrapper" style="text-align: center;">-->
+            <!--&lt;!&ndash; bug 2017年 7 月21 日  点击默认图 大图与此不对应&ndash;&gt;-->
+            <!--<volist name="info['list'][0]['img']" id="vo">-->
+                <!--<div class="swiper-slide sjs-slide" id="img1"><img src="{$vo}" style="width: 80%"></div>-->
+          <!--</volist>-->
+        <!--</d  iv>-->
+        <!--&lt;!&ndash;<div class="swiper-pagination sjs-pagination"></div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="swiper-pagination sjs-pagination"></div>&ndash;&gt;-->
+<!--</div>-->
+<div id="zxrj-cover"></div>
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=640){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+//    var swiper = new Swiper('.swiper-container-gjrj', {
+//        pagination: '.swiper-pagination-gjrj',
+//        slidesPerView: 4,
+//        paginationClickable: true,
+//        spaceBetween: 30,
+//        freeMode: true
+//    });
+    $(".girj-left-list-title-line:last").hide();
+    //    $(".azgf").hide();
+    $(".tempWrap").hide();
+
+    window.onload=function(){
+        $(".girj-left-list").hide();
+        $(".sjs-index-swiper").hide();
+    };
+    $(".gjrj-left-btn").click(function(){
+        $(".girj-left-list").show();
+        $("body").css("overflow","hidden");
+    });
+    $(".girj-left-list-content").click(function(){
+        $(".girj-left-list").hide();
+        $("body").css("overflow","");
+        $(this).children().css("color","#1694eb");
+        $(this).siblings(".girj-left-list-content").children().css("color","#ffffff");
+    });
+
+    $(".zxrj-img-btn li").click(function(){
+        $("#zxrj-cover").show();
+        $(".tempWrap").show();
+        $("body").css("overflow","hidden");
+    });
+    $("#zxrj-cover").click(function(){
+        $(this).hide();
+        $(".tempWrap").hide();
+        $("body").css("overflow","");
+    })
+//    var swiper = new Swiper('.swiper-container-img', {
+////        pagination: '.sjs-pagination',
+//        paginationType: 'fraction',
+//        loop:null
+//    });
+</script>
+</html>

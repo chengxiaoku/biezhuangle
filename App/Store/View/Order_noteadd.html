@@ -1,0 +1,138 @@
+<include file="./Public/Store/html/head.html" />
+<body data-type="widgets">
+    <script src="__JS__/main.js"></script>
+    <div class="am-g tpl-g">
+        <script src="__JS__/theme.js"></script>
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-body am-fr">
+                            <form method="post"  class="am-form tpl-form-line-form">
+                                <input id="deco_id" name="deco_id" type="hidden" value="{$deco_id}">
+                                <input id="node_id" name="node_id" type="hidden" value="{$node_id}">
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">标题</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" class="tpl-form-input" name="title" placeholder="请输入标题文字">
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">状态</label>
+                                    <div class="am-u-sm-9">
+                                        <select name="status" data-am-selected>
+                                            <option value="2">施工中</option>
+                                            <option value="3" selected>申请验收</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">时间</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" name="create_time" class="am-form-field tpl-form-no-bg" data-am-datepicker="{format: 'yyyy-mm-dd'}" readonly required>
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">图片</label>
+                                    <div class="am-u-sm-9" >
+                                        <div class="am-form-group am-form-file">
+                                            <div class="uploadBtn" style="height: 45px;">上传图片</div>
+                                            <small style="padding: 15px;color: red;">双击图片删除修改。(照片大小建议 小于1M)</small>
+                                        </div>
+                                        <div id="img_area"></div>
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 35px;">
+                                        <button id="btn_submit" type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                        <small style="padding: 15px;color: red;">日记提交后,不可修改。</small>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="./Public/Store/html/footer.html" />
+    <script>
+        var index = parent.layer.getFrameIndex(window.name);
+        // 修改后图片上传前，尝试将图片压缩到1600 * 1600
+        img_size = 1;  //单位 M
+        var uploader = WebUploader.create({
+            auto: true,
+            pick: '.uploadBtn',
+            fileSingleSizeLimit: 1024 * 1024 * parseInt(img_size),//限制上传单个文件大小
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*',
+            },
+            thumb:{
+                //width: 320,
+                //height: 422,
+                width: 920,
+                height: 922,
+                quality: 100,
+                allowMagnify: false,
+                crop: false,
+                type: 'image/jpeg'
+            },
+        });
+
+        uploader.onFileQueued = function( file ) {
+            uploader.makeThumb( file, function( error, src ) {
+                if (error) return;
+                var html = '';
+                html += '<input name="href[]" type="hidden" value="'+src+'">';
+                html += '<img src="'+src+'" style="max-width:150px" ondblclick="del_img(this)">';
+                $('#img_area').append(html);
+                parent.layer.iframeAuto(index);
+            });
+        };
+        //图片上传作物提示
+        uploader.on("error", function (type) {
+
+            if (type == "Q_TYPE_DENIED") {
+                layer.msg("请上传JPG、PNG、GIF、BMP格式文件");
+            } else if (type == "Q_EXCEED_SIZE_LIMIT" || type == 'F_EXCEED_SIZE') {
+                layer.msg("文件大小不能超过"+img_size+"M");
+            }else{
+                layer.msg("上传出错！请检查文件大小(小于"+img_size+"M)重新上传！错误代码"+type);
+            }
+        });
+
+        $(function () {
+            var now_date = new Date().Format("yyyy-MM-dd");
+            $("input[name='create_time']").datepicker('setValue', now_date);
+            $('form').ajaxForm(function (data) {
+                $('form').clearForm(); 
+                $('#btn_submit').attr('disabled',"true");
+                if (data['success']) {
+                    layer.alert(data['info'], function (data) {
+                        parent.$("#example-r").load(parent.location.href+" #example-r");
+                        parent.layer.close(index);
+                    });
+                } else {
+                    layer.msg(data['info'], {
+                        icon: 5
+                    });
+                }
+            });
+        });
+
+        function del_img(obj){
+            layer.confirm('您确定要删除该图片？', function(i){
+                $(obj).prev().remove();
+                $(obj).remove();
+                layer.close(i);
+            });
+            
+        }
+
+    </script>
+</body>
+
+</html>

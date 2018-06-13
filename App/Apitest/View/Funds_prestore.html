@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/Public/Home/js/jquery.min.js"></script>
+    <script src="/Public/Static/echarts.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width:650px; height:400px;"></div>
+</body>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    var xAxis = 
+    //option
+    option = {
+        title: {
+            text: '预存合计',
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 70
+        }],
+        xAxis: {
+            type: 'category',
+            data: [],
+            splitLine: {
+                show: false,
+            },
+            axisLabel: {
+                textStyle: {
+                    fontSize: 18 
+                }
+            },
+            axisTick:{
+                show:false
+            },
+        },
+        yAxis: {
+            show : false,
+        },
+        series: [{
+            type: 'line',
+            itemStyle: {
+                normal: {
+                    color: "#2196F3",
+                    label: {
+                        show: true,
+                        position: "top",
+                        formatter: function(p) {
+                            return p.value > 0 ? (p.value) : '';
+                        },
+                        textStyle: {
+                            fontSize: 18 
+                        }
+                    }
+                }
+            },
+            data: [],
+        }]
+    };
+
+    myChart.showLoading();
+    $.get("{:U('get_data')}",{type:0,uid:'{$uid}'},function (data){
+        myChart.setOption({
+            title:{
+                text:'预存合计：'+data.count
+            },
+            xAxis: {
+                data: data.xAxis
+            },
+            series: [{
+                name: '预存',
+                data: data.data
+            }]
+        });
+        myChart.hideLoading();
+    });
+
+    myChart.setOption(option);
+</script>
+
+</html>

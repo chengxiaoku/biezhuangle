@@ -1,0 +1,64 @@
+<include file="./Public/Home/html/head.html" />
+<script src="__STATIC__/layer/layer.js"></script>
+<script src="__STATIC__/jquery.form.min.js"></script>
+<script>
+$(function(){
+    $('form').ajaxForm(function(data){
+        if(data['success']){
+            layer.alert(data['info'],function(data){
+                location.href = "{:U('Index/index')}";
+            });
+        }else{
+            layer.msg(data['info']);
+        }
+    });
+});
+</script>
+<div class="form-wrap body-bg">
+    <div class="middle1200">
+        <form method="post" class="form">
+            <h1>F1训练系统</h1>
+            <p class="form-tit">用户登录</p>
+            <div class="form-row">
+                <div class="form-td ico ico1"><span></span></div>
+                <div class="form-td"><input name="username" type="text" placeholder="输入用户账号（军官证号）"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-td ico ico2"><span></span></div>
+                <div class="form-td"><input name="password" type="password" placeholder="输入密码"></div>
+            </div>
+            <div class="submit">
+                <button>立即登录</button>
+            </div>
+            <div class="txt-row">
+                <div class="form-td pull-left">没有账号？<a href="{:U('Public/regist')}">免费注册</a></div>
+                <!-- <div class="form-td pull-right"><a href="{:U('Public/forget')}">忘记密码？</a></div> -->
+                <div class="clearfix"></div>
+            </div>
+        </form>
+        <div class="footer middle1200">
+            <div class="lj-list">
+                <ul class="about">
+                    <li><a href="">网站首页</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">安全教育</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">技术培训</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">风险防范</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">综合评估</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">互动交流</a></li>
+                    <li class="mar8">|</li>
+                    <li><a href="">资料下载</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <p class="mar25">未经授权禁止转载、摘编、复制或则建立镜像，如有违反，追究法律责任</p>
+            <p class="">Copyright © 2015-2016 风险训练网 All rights reserved.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

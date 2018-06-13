@@ -1,0 +1,78 @@
+<include file="./Public/Backstage/html/head.html" />
+<body data-type="index">
+<div class="am-g tpl-g">
+    <include file="./Public/Backstage/html/header.html" />
+    <include file="./Public/Backstage/html/sidebar.html" />
+    <!-- 内容区域 -->
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">首页</div>
+                        </div>
+
+                        <div class="row  am-cf">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+                                <div class="widget widget-green  am-cf">
+                                    <div class="widget-statistic-header">
+                                        会员人数
+                                    </div>
+                                    <div class="widget-statistic-body">
+                                        <div class="widget-statistic-value">
+                                            {$user}/位
+                                        </div>
+                                        <span class="widget-statistic-icon am-icon-support"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                                <div class="widget widget-primary am-cf">
+                                    <div class="widget-statistic-header">
+                                        管家数量
+                                    </div>
+                                    <div class="widget-statistic-body">
+                                        <div class="widget-statistic-value">
+                                            {$butler}/位
+                                        </div>
+                                        <span class="widget-statistic-icon am-icon-credit-card-alt"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                                <div class="widget widget-purple am-cf">
+                                    <div class="widget-statistic-header">
+                                        <!--提现总数-->
+                                    </div>
+                                    <div class="widget-statistic-body">
+                                        <div class="widget-statistic-value">
+                                            <!--￥{$amount|default="0.00"}-->
+                                        </div>
+                                        <span class="widget-statistic-icon am-icon-support"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Public/Backstage/html/footer.html" />
+</body>
+<script type="text/javascript">
+    function show_add(){
+        layer.open({
+            type: 2,
+            title: '添加装修小哥',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['650px', '80%'],
+            content: "{:U('add')}",
+        });
+    }
+</script>
+</html>
